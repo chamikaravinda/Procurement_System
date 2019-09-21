@@ -10,10 +10,10 @@ import './index.css';
 function App() {
   return (
     <Router>
-      <div className="flexible-content">
+      <div className="flexible-content" >
         <TopNavigation />
         <SideNavigation />
-        <main id="content" className="p-5">
+        <main id="content" className="p-5" style={{minHeight:'100vh'}}>
           <Routes />
         </main>
         <Footer />

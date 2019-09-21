@@ -26,7 +26,7 @@ class TopNavigation extends Component {
                 </MDBNavbarBrand>
                 <MDBNavbarToggler onClick = { this.onClick } />
                 <MDBCollapse isOpen = { this.state.collapse } navbar>
-                    <MDBNavbarNav left>
+                    <MDBNavbarNav left className="d-xl-none">
                         <MDBNavItem active>
                             <MDBNavLink to="#">Home</MDBNavLink>
                         </MDBNavItem>
