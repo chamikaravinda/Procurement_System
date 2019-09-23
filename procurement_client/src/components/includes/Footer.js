@@ -3,7 +3,7 @@ import { MDBFooter, MDBBtn, MDBIcon } from 'mdbreact';
 
 const Footer = () => {
     return (
-        <MDBFooter color="blue" className="text-center font-small darken-2">
+        <MDBFooter color="success-color-dark" className="text-center font-small darken-2">
             <div className="pt-4">
                 <MDBBtn outline color="white" tag="a" href="https://mdbootstrap.com/docs/react/getting-started/download/" target="_blank">Download MDB<MDBIcon icon="download" className="ml-2"/></MDBBtn>
                 <MDBBtn outline color="white" tag="a" href="https://mdbootstrap.com/docs/react/getting-started/quick-start/" target="_blank">Start free tutorial<MDBIcon icon="graduation-cap" className="ml-2"/></MDBBtn>

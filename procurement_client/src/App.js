@@ -1,11 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link,Switch } from "react-router-dom";
 
-import Routes from '../src/components/Routes';
-import TopNavigation from './components/topNavigation';
-import SideNavigation from './components/sideNavigation';
-import Footer from './components/Footer';
+import Routes from '../src/components/includes/Routes';
+import TopNavigation from './components/includes/topNavigation';
+import SideNavigation from './components/includes/sideNavigation';
+import Footer from './components/includes/Footer';
 import './index.css';
+
+
 
 function App() {
   return (

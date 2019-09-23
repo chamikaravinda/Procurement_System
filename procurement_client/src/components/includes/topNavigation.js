@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBIcon } from 'mdbreact';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBDropdown,
+    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from 'mdbreact';
 
 class TopNavigation extends Component {
     state = {
@@ -47,11 +50,17 @@ class TopNavigation extends Component {
                         <MDBNavItem>
                             <a className="nav-link navbar-link" rel="noopener noreferrer" target="_blank" href="https://twitter.com/mdbootstrap"><MDBIcon fab icon="twitter" /></a>
                         </MDBNavItem>
-                        <MDBNavItem>
-                            <a className="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="https://github.com/mdbootstrap/React-Bootstrap-with-Material-Design" target="_blank"><MDBIcon fab icon="github" className="mr-2"/>MDB GitHub</a>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <a className="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="https://mdbootstrap.com/products/react-ui-kit/" target="_blank"><MDBIcon fab icon="github" className="mr-2"/>Go Pro</a>
+                        <MDBNavItem >
+                            <MDBDropdown>
+                                <MDBDropdownToggle nav caret>
+                                <MDBIcon icon="user" /> Chamika
+                                </MDBDropdownToggle>
+                                <MDBDropdownMenu className="dropdown-default mr-5 pr-5">
+                                    <MDBDropdownItem><Link to="/logout">Log Out</Link></MDBDropdownItem>
+                                    <MDBDropdownItem href="#!">Profile</MDBDropdownItem>
+                                    <MDBDropdownItem href="#!">Settings</MDBDropdownItem>
+                                </MDBDropdownMenu>
+                            </MDBDropdown>
                         </MDBNavItem>
                     </MDBNavbarNav>
                 </MDBCollapse>
