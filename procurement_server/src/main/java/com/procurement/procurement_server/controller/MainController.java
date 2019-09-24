@@ -16,6 +16,8 @@ import com.procurement.procurement_server.service.ServiceHandler;
 @Controller
 public class MainController {
 
+	
+	
     @Autowired
     ServiceHandler serviceHandler;
 
@@ -27,5 +29,17 @@ public class MainController {
             @RequestParam(value = "RT") String reqTyp) {
         return serviceHandler.handleServiceRequest(reqTyp);
     }
+    
+    
+    
+    /* Kalana Elapatha */
+    
+    @GetMapping("/addSupplier")
+    public ResponseEntity addSupplier(
+            @RequestParam(value = "SP") String reqTyp) {
+        return serviceHandler.handleServiceRequest(reqTyp);
+    }
+    
+    /* Kalana Elapatha  not completed yet*/
 
 }
