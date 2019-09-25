@@ -17,6 +17,8 @@ import com.procurement.procurement_server.service.ServiceHandler;
 @Controller
 public class MainController {
 
+	
+	
     @Autowired
     ServiceHandler serviceHandler;
 
@@ -34,5 +36,17 @@ public class MainController {
         System.out.println(user);
         return serviceHandler.handleServiceRequest("26", user);
     }
+    
+    
+    
+    /* Kalana Elapatha */
+    
+    @GetMapping("/addSupplier")
+    public ResponseEntity addSupplier(
+            @RequestParam(value = "SP") String reqTyp) {
+        return serviceHandler.handleServiceRequest(reqTyp);
+    }
+    
+    /* Kalana Elapatha  not completed yet*/
 
 }
