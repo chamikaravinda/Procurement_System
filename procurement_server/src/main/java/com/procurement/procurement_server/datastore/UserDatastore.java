@@ -29,12 +29,17 @@ public class UserDatastore extends AbstractDatastore {
     public void setDataStore(List list) {
         List<User> userArrayList = (List<User>) list;
         for (User user : userArrayList) {
-            dataStore.put(user.getEmail(),user);
+            dataStore.put(user.getEmail(), user);
         }
     }
 
     @Override
     public User getUserFromStore(String key) {
         return (User) dataStore.get(key);
+    }
+
+    @Override
+    public void addToStore(Object obj) {
+        dataStore.put(((User) obj).getEmail(), obj);
     }
 }

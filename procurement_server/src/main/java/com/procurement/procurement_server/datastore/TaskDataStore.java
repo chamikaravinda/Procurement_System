@@ -28,4 +28,9 @@ public class TaskDataStore extends AbstractDatastore {
     public Task getUserFromStore(String key) {
         return (Task) dataStore.get(key);
     }
+
+    @Override
+    public void addToStore(Object obj) {
+
+    }
 }

@@ -12,18 +12,26 @@ import com.procurement.procurement_server.util.CommonConstants;
 @Component
 public class ServiceHandler {
 
+    private static boolean isInitialized = false;
+
     @Autowired
     UserService userService;
 
     @Autowired
     DataServer dataServer;
 
-    public ResponseEntity handleServiceRequest(String reqId,Object obj) {
-        startDataServer();
+    public ResponseEntity handleServiceRequest(String reqId, Object obj) {
+        if (!isIsInitialized()) {
+            startDataServer();
+            setIsInitialized(true);
+        }
         switch (Integer.parseInt(reqId)) {
-            case CommonConstants.GET_USER_REQUEST : return getRequiredUser(obj);
-            case CommonConstants.ADD_USER_REQUEST: return addNewUser((User)obj);
-            default: return new ResponseEntity("Failed", HttpStatus.OK);
+            case CommonConstants.GET_USER_REQUEST:
+                return getRequiredUser(obj);
+            case CommonConstants.ADD_USER_REQUEST:
+                return addNewUser((User) obj);
+            default:
+                return new ResponseEntity("Failed", HttpStatus.OK);
         }
     }
 
@@ -37,6 +45,15 @@ public class ServiceHandler {
 
     private void startDataServer() {
         dataServer.startDataServer();
+    }
+
+
+    public static boolean isIsInitialized() {
+        return isInitialized;
+    }
+
+    public static void setIsInitialized(boolean isInitialized) {
+        ServiceHandler.isInitialized = isInitialized;
     }
 
 }

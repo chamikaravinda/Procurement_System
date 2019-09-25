@@ -34,9 +34,12 @@ public class UserService {
         try {
             User isAlredyExistUser = userRepo.findByemail(user.getEmail());
             if (isAlredyExistUser != null) {
+                return new ResponseEntity<>("Invalid", HttpStatus.NO_CONTENT);
+            } else {
+                userRepo.save(user).get_id();
+                UserDatastore.getSharedInstance().addToStore(userRepo.findByemail(user.getEmail()));
+                return new ResponseEntity<Object>(user, HttpStatus.OK);
             }
-            String id = userRepo.save(user).get_id();
-            return new ResponseEntity<Object>(user, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
             return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);

@@ -1,5 +1,7 @@
 package com.procurement.procurement_server.datastore;
 
+import com.procurement.procurement_server.model.User;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,5 +14,7 @@ public abstract class AbstractDatastore <T extends DatabaseEvent> {
     public abstract void setDataStore(List list);
 
     public abstract T getUserFromStore(String key);
+
+    public abstract void addToStore(Object obj);
 
 }
