@@ -24,9 +24,9 @@ public class UserService {
             System.out.println(e);
         }
         if (usr != null) {
-            return new ResponseEntity<>(usr, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(usr, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(usr, HttpStatus.OK);
         }
     }
 
@@ -34,7 +34,7 @@ public class UserService {
         try {
             User isAlredyExistUser = userRepo.findByemail(user.getEmail());
             if (isAlredyExistUser != null) {
-                return new ResponseEntity<>("Invalid", HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>("Invalid", HttpStatus.OK);
             } else {
                 userRepo.save(user).get_id();
                 UserDatastore.getSharedInstance().addToStore(userRepo.findByemail(user.getEmail()));
@@ -42,7 +42,7 @@ public class UserService {
             }
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
-            return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e, HttpStatus.OK);
         }
     }
 
