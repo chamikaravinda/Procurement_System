@@ -16,16 +16,9 @@ import com.procurement.procurement_server.model.User;
 @Service
 public class DataServer {
 
-    private static DataServer self;
 
     @Autowired
     UserRepo userRepo;
-    public static DataServer getSharedInstance() {
-        if (self == null) {
-            self = new DataServer();
-        }
-        return self;
-    }
 
     public User getUser(String key) {
         return UserDatastore.getSharedInstance().getUserFromStore(key);

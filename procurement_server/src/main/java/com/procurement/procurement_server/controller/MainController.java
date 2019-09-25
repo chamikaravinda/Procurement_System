@@ -1,6 +1,7 @@
 package com.procurement.procurement_server.controller;
 
 
+import com.procurement.procurement_server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,7 @@ import com.procurement.procurement_server.service.ServiceHandler;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/construction")
 
 @Controller
 public class MainController {
@@ -22,10 +23,16 @@ public class MainController {
     @Autowired
     DataServer dataServer;
 
-    @GetMapping("/construction")
-    public ResponseEntity allData(
-            @RequestParam(value = "RT") String reqTyp) {
-        return serviceHandler.handleServiceRequest(reqTyp);
+    @PostMapping("/get")
+    public ResponseEntity getUserData(@RequestBody User user) {
+        System.out.println(user);
+        return serviceHandler.handleServiceRequest("25",user);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity addData(@RequestBody User user) {
+        System.out.println(user);
+        return serviceHandler.handleServiceRequest("26", user);
     }
 
 }
