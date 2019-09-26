@@ -20,7 +20,6 @@ public class Staff {
     private String lastName;
     private Object type;
 
-
     public String getStaffId() {
         return staffId;
     }

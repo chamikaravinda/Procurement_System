@@ -11,7 +11,6 @@ public class User implements DatabaseEvent {
 
     @Id
     private String _id;
-    private String name;
     private String email;
     private String password;
 
@@ -21,14 +20,6 @@ public class User implements DatabaseEvent {
 
     public void set_id(String _id) {
         this._id = _id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
@@ -45,11 +36,6 @@ public class User implements DatabaseEvent {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User [_id=" + _id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
     }
 
     @Override

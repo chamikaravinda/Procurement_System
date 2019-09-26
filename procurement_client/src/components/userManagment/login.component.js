@@ -20,7 +20,7 @@ export default class UserLogin extends Component {
     localStorage.setItem('status',true);
 
     if(localStorage.getItem('status')){
-      this.props.history.push("/");
+      this.props.history.push("/dashboard");
       window.location.reload();
     }
   }
@@ -32,7 +32,7 @@ export default class UserLogin extends Component {
         <br />
         <br />
         <MDBCard className="d-flex justify-content-center align-self-center">
-          <MDBCardHeader className="text-center" color="success-color-dark" tag="h3">
+          <MDBCardHeader className="text-center" color="aqua-gradient" tag="h3">
             Sign in
           </MDBCardHeader>
           <MDBCardBody>
@@ -58,7 +58,7 @@ export default class UserLogin extends Component {
               />
 
               <div className="text-center mt-4 mr-2">
-                <MDBBtn className="btn-block" color="dark-green" type="submit">
+                <MDBBtn className="btn-block" color="aqua-gradient" type="submit">
                   <i class="fas fa-sign-in-alt" /> Login
                 </MDBBtn>
               </div>

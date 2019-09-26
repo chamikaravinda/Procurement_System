@@ -6,19 +6,23 @@ import TopNavigation from './components/includes/topNavigation';
 import SideNavigation from './components/includes/sideNavigation';
 import Footer from './components/includes/Footer';
 import './index.css';
+import Login from './components/userManagment/login.component';
+import UserRegister from './components/userManagment/register.component'
+import DashboardPage from "./components/pages/DashboardPage";
 
 
 
 function App() {
   return (
     <Router>
-      <div className="flexible-content" >
-        <TopNavigation />
-        <SideNavigation />
-        <main id="content" className="p-5" style={{minHeight:'100vh'}}>
+        <div className="flexible-content" >
+      {/*  <TopNavigation />*/}
+      {/*  <SideNavigation />*/}
+      {/*  <main id="content" className="p-5" style={{minHeight:'100vh'}}>*/}
           <Routes />
-        </main>
-        <Footer />
+      {/*  </main>*/}
+
+      {/*<Footer />*/}
       </div>
     </Router>
   );

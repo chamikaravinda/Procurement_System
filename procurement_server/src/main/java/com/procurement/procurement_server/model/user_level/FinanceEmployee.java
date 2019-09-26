@@ -14,7 +14,6 @@ public class FinanceEmployee extends Staff {
 
     private List<String> paidPurchaseList;
 
-
     public List<String> getPaidPurchaseList() {
         return paidPurchaseList;
     }

@@ -29,7 +29,7 @@ public class ServiceHandler {
             case CommonConstants.GET_USER_REQUEST:
                 return getRequiredUser(obj);
             case CommonConstants.ADD_USER_REQUEST:
-                return addNewUser((User) obj);
+                return addNewUser(obj);
             default:
                 return new ResponseEntity("Failed", HttpStatus.OK);
         }
@@ -39,8 +39,8 @@ public class ServiceHandler {
         return userService.getRequiredUser((User) obj);
     }
 
-    private ResponseEntity addNewUser(User user) {
-        return userService.addNewUser(user);
+    private ResponseEntity addNewUser(Object obj) {
+        return userService.addNewUser(obj);
     }
 
     private void startDataServer() {
