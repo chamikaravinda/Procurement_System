@@ -10,7 +10,7 @@ const TopNavigation = () => {
                 <img alt="Procument System" className="img-fluid" src={logo}/>
             </a>
             <MDBListGroup className="list-group-flush ">
-                <NavLink color exact={true} to="/" activeClassName="activeClass ">
+                <NavLink  to="/" activeClassName="activeClass ">
                     <MDBListGroupItem >
                         <MDBIcon icon="chart-pie" className="mr-3"/>
                         Dashboard

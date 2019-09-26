@@ -185,12 +185,13 @@ export default class UserRegister extends Component {
             axios
                 .post('http://localhost:5001/api/construction/user/add/', User)
                 .then(res => {
-                    console.log(res.data);
-
+                    console.log(res);
                     swal("Success", "User added sucessfully", "success");
+                    this.props.history.push("/");
+                    window.location.reload();
                 })
                 .catch(err => {
-                    swal("Error", err.response.data.error + "", "error");
+                    swal("Error","User Already Exists","Error");
                     console.log(err);
                 });
         }

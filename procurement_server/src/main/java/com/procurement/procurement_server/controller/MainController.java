@@ -1,8 +1,7 @@
 package com.procurement.procurement_server.controller;
 
 
-import com.procurement.procurement_server.model.User;
-import com.procurement.procurement_server.model.user_level.Staff;
+import com.procurement.procurement_server.model.user_level.User;
 import com.procurement.procurement_server.model.user_level.UserAdaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,5 @@
 package com.procurement.procurement_server.datastore;
 
-import com.procurement.procurement_server.model.User;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

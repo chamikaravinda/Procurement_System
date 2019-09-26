@@ -1,5 +1,7 @@
 package com.procurement.procurement_server.model.user_level;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
 /**
@@ -9,10 +11,16 @@ import java.util.List;
  * SiteManager will order goods
  *
  ***/
+@Document(collection = "siteManager")
 public class SiteManager extends Staff {
 
     private List<String> purchaseList;
     private List<String> deliveredPurchasesList;
+
+    /**
+     * List should be edited after orders created
+     *
+     ***/
 
     public List<String> getPurchaseList() {
         return purchaseList;

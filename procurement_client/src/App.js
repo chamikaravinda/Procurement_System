@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link,Switch } from "react-router-dom";
 
-import Routes from '../src/components/includes/Routes';
+import MainRoutes from '../src/components/includes/MainRoutes';
 import TopNavigation from './components/includes/topNavigation';
 import SideNavigation from './components/includes/sideNavigation';
 import Footer from './components/includes/Footer';
@@ -19,7 +19,7 @@ function App() {
       {/*  <TopNavigation />*/}
       {/*  <SideNavigation />*/}
       {/*  <main id="content" className="p-5" style={{minHeight:'100vh'}}>*/}
-          <Routes />
+          <MainRoutes/>
       {/*  </main>*/}
 
       {/*<Footer />*/}

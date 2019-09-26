@@ -1,4 +1,4 @@
-package com.procurement.procurement_server.dao;
+package com.procurement.procurement_server.dao.user_dao;
 
 import com.procurement.procurement_server.model.user_level.Staff;
 import org.springframework.data.mongodb.repository.MongoRepository;

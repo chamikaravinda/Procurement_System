@@ -7,7 +7,6 @@ public class UserAdaptor {
     private String type;
     private String email;
     private String password;
-    private Object userType;
 
     public String getFirstName() {
         return firstName;
@@ -48,13 +47,4 @@ public class UserAdaptor {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Object getUserType() {
-        return userType;
-    }
-
-    public void setUserType(Object userType) {
-        this.userType = userType;
-    }
-
 }

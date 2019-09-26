@@ -1,5 +1,7 @@
 package com.procurement.procurement_server.model.user_level;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ import java.util.List;
  *
  ***/
 
+@Document(collection = "financeEmployee")
 public class FinanceEmployee extends Staff {
 
     private List<String> paidPurchaseList;

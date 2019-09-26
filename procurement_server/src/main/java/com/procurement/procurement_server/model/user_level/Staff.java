@@ -18,7 +18,7 @@ public class Staff {
     private String staffId;
     private String firstName;
     private String lastName;
-    private Object type;
+    private String type;
 
     public String getStaffId() {
         return staffId;
@@ -44,11 +44,11 @@ public class Staff {
         this.firstName = firstName;
     }
 
-    public Object getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Object type) {
+    public void setType(String type) {
         this.type = type;
     }
 }

@@ -1,7 +1,8 @@
 package com.procurement.procurement_server.service;
 
 
-import com.procurement.procurement_server.model.User;
+import com.procurement.procurement_server.model.user_level.User;
+import com.procurement.procurement_server.service.user_service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
