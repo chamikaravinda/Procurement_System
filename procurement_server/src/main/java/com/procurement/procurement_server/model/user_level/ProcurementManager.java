@@ -10,6 +10,11 @@ import java.util.List;
  *
  ***/
 
+/**
+ * He will add sites to the people and this class will manage all the users
+ *
+ ***/
+
 @Document(collection = "procurementManager")
 public class ProcurementManager extends Staff {
 

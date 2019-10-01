@@ -18,8 +18,7 @@ import com.procurement.procurement_server.service.ServiceHandler;
 @Controller
 public class MainController {
 
-	
-	
+
     @Autowired
     ServiceHandler serviceHandler;
 
@@ -29,19 +28,30 @@ public class MainController {
     @PostMapping("user/get")
     public ResponseEntity getUserData(@RequestBody User user) {
         System.out.println(user);
-        return serviceHandler.handleServiceRequest("25",user);
+        return serviceHandler.handleServiceRequest("25", user,"");
     }
 
     @PostMapping("user/add")
     public ResponseEntity addData(@RequestBody UserAdaptor usedAdaptor) {
         System.out.println(usedAdaptor);
-        return serviceHandler.handleServiceRequest("26",usedAdaptor);
+        return serviceHandler.handleServiceRequest("26", usedAdaptor,"");
     }
-    
-    
-    
+
+    @GetMapping("/data")
+    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,
+                                  @RequestParam(value = "Uid", defaultValue = "") String uid) {
+        System.out.println(reqTyp);
+        return serviceHandler.handleServiceRequest(reqTyp, new Object(), uid);
+    }
+
+
+
+
+
+
+
     /* Kalana Elapatha */
-    
+
 //    @GetMapping("/addSupplier")
 //    public ResponseEntity addSupplier(
 //            @RequestParam(value = "SP") String reqTyp) {
