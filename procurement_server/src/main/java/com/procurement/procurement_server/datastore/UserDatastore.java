@@ -1,10 +1,8 @@
 package com.procurement.procurement_server.datastore;
 
 
-import com.procurement.procurement_server.dao.user_dao.UserRepo;
 import com.procurement.procurement_server.model.user_level.User;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +11,6 @@ import java.util.List;
 public class UserDatastore extends AbstractDatastore {
 
     private static UserDatastore self;
-
-    @Autowired
-    UserRepo userRepo;
 
     public static UserDatastore getSharedInstance() {
         if (self == null) {
@@ -41,4 +36,10 @@ public class UserDatastore extends AbstractDatastore {
     public void addToStore(Object obj) {
         dataStore.put(((User) obj).getEmail(), obj);
     }
+
+    @Override
+    public void removeFromStore(String id) {
+        dataStore.remove(id);
+    }
+
 }

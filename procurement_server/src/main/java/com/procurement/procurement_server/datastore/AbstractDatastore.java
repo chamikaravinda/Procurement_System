@@ -15,4 +15,6 @@ public abstract class AbstractDatastore <T extends DatabaseEvent> {
 
     public abstract void addToStore(Object obj);
 
+    public abstract void removeFromStore(String id);
+
 }

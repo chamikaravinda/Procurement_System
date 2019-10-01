@@ -43,6 +43,18 @@ export default class DashboardPage extends Component {
             })
             .catch(err => {
                 console.log(err);
+            });
+
+        axios.get('http://localhost:5001/api/construction/data?RT=31')
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    allUsers: res.data,
+
+                })
+            })
+            .catch(err => {
+                console.log(err);
             })
     }
 
@@ -137,37 +149,57 @@ export default class DashboardPage extends Component {
                         <MDBCol md="12">
                             <MDBCard>
                                 <MDBCardBody>
-                                    <form>
-                                        <p className="h4 text-center mb-4">Add Supplier</p>
-                                        <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
-                                            Your name
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="defaultFormRegisterNameEx"
-                                            className="form-control"
-                                            name="name" onChange={this.OnChange}
-                                        />
-                                        <br/>
-                                        <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
-                                            Your email
-                                        </label>
-                                        <input
-                                            type="email"
-                                            id="defaultFormRegisterEmailEx"
-                                            className="form-control"
-                                            name="email" onChange={this.OnChange}
-                                        />
-                                        <br/>
+                                    <>
+                                        <div className="container border-bottom">
+                                            <br/> <br/>
+                                            <h4>All users</h4>
+                                            <br/> <br/>
+                                            <MDBTable bordered>
+                                                <MDBTableHead>
+                                                    <tr className="bg-dark text-light">
+                                                        <th>Staff Id</th>
+                                                        <th>User Name</th>
+                                                        <th>Designation</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </MDBTableHead>
+                                                <MDBTableBody>
+                                                    {this.state.allUsers.map((result, index) => (
+                                                            <tr>
+                                                                <td>{result.staffId}</td>
+                                                                <td>{result.firstName}</td>
+                                                                <td>{result.type}</td>
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() => this.fileDelete(result.staffId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        {/*<Link to={"/report/" + result.staffId}*/}
+                                                                        {/*      className="btn btn-primary btn-sm">*/}
+                                                                        {/*    {" "}<MDBIcon icon="chart-line"/>*/}
+                                                                        {/*    {" "} Analyse{" "}*/}
+                                                                        {/*</Link>*/}
+                                                                        {/*<Link to={"/assign/" + result.staffId}*/}
+                                                                        {/*      className="btn btn-primary btn-sm">*/}
+                                                                        {/*    {" "}<MDBIcon icon="bug"*/}
+                                                                        {/*                  style={{color: '#FFF'}}/>*/}
+                                                                        {/*    {" "} Assign{" "}*/}
+                                                                        {/*</Link>*/}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    )}
 
-
-                                        <div className="text-center mt-4">
-                                            <MDBBtn color="unique" type="submit">
-                                                Add
-                                            </MDBBtn>
+                                                </MDBTableBody>
+                                            </MDBTable>
                                         </div>
-                                    </form>
-
+                                    </>
                                 </MDBCardBody>
                             </MDBCard>
                         </MDBCol>
