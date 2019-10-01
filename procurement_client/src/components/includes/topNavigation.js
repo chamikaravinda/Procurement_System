@@ -53,12 +53,11 @@ class TopNavigation extends Component {
                         <MDBNavItem >
                             <MDBDropdown>
                                 <MDBDropdownToggle nav caret>
-                                <MDBIcon icon="user" /> Chamika
+                                    <MDBIcon icon="user" >  {localStorage.getItem('name')} </MDBIcon>
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu className="dropdown-default mr-5 pr-5">
-                                    <MDBDropdownItem><Link to="/logout">Log Out</Link></MDBDropdownItem>
-                                    <MDBDropdownItem href="#!">Profile</MDBDropdownItem>
-                                    <MDBDropdownItem href="#!">Settings</MDBDropdownItem>
+                                    <MDBDropdownItem><Link to="/">Log Out</Link></MDBDropdownItem>
+                                    <MDBDropdownItem><Link to="/">Profile</Link></MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavItem>

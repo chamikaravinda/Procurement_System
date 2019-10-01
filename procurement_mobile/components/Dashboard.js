@@ -1,9 +1,10 @@
 import HomeScreen from "./Home";
 import SettingsScreen from "./Login";
 import React, {Component} from "react";
-import {SafeAreaView,Text} from "react-native";
+import {SafeAreaView,Text,FlatList} from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons'
 import {createMaterialTopTabNavigator} from 'react-navigation';
+import OrderWindow from './order/OrderWindow';
 
 
 export default class Dashboard extends Component {
@@ -37,7 +38,7 @@ const TopTabNavigator = createMaterialTopTabNavigator(
             }
         },
         Profile: {
-            screen: HomeScreen,
+            screen: OrderWindow,
             navigationOptions: {
                 tabBarLabel: 'Order',
                 tabBarIcon: ({tintColor}) => (<Icon name="md-add-circle" color={tintColor} size={18}/>)
@@ -59,7 +60,7 @@ const TopTabNavigator = createMaterialTopTabNavigator(
             showLabel: false,
             activeTintColor: 'grey',
             style: {
-                backgroundColor: '#FFC300'
+                backgroundColor: '#61b53f'
             },
             showIcon: true,
         },

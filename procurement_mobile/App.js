@@ -4,7 +4,7 @@ import SignIn from '../procurement_mobile/components/User/Sign_In_Component'
 import {createStackNavigator,TransitionConfiguration} from 'react-navigation-stack';
 import DashBoard from '../procurement_mobile/components/Dashboard'
 import SignUp from './components/User/Sign_Up'
-import { fromLeft,fadeIn,fromRight } from 'react-navigation-transitions';
+import { fromLeft,fadeIn,fromRight,flipY} from 'react-navigation-transitions';
 
 class App extends Component {
 
@@ -41,7 +41,7 @@ export default App = createStackNavigator(
         },
     },{
         initialRouteName: 'First',
-        transitionConfig: () => fromRight(200),
+        transitionConfig: () => flipY(200),
 
 
     })

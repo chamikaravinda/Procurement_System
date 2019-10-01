@@ -67,12 +67,10 @@ export default class UserLogin extends Component {
                     } else if (res.data === "Invalid Password") {
                         swal("Error", "Invalid Password", "error");
                     } else {
-                        // localStorage.setItem('id', res.data._id);
-                        // localStorage.setItem('name', res.data.name);
-                        // localStorage.setItem('email', res.data.email);
-                        // localStorage.setItem('status', true);
+                        localStorage.setItem('name', res.data.firstName);
+                        localStorage.setItem('userType', res.data.type);
                         this.props.history.push("/main");
-                        window.location.reload();
+                        // window.location.reload();
                     }
                 })
                 .catch(err => {

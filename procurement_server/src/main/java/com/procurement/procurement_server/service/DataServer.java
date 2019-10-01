@@ -24,6 +24,10 @@ public class DataServer {
     }
 
     public void startDataServer() {
-        UserDatastore.getSharedInstance().setDataStore(userRepo.findAll());
+        try {
+            UserDatastore.getSharedInstance().setDataStore(userRepo.findAll());
+        }catch (Exception e) {
+            UserDatastore.getSharedInstance().setDataStore(userRepo.findAll());
+        }
     }
 }

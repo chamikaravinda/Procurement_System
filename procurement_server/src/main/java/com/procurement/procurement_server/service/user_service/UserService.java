@@ -2,6 +2,7 @@ package com.procurement.procurement_server.service.user_service;
 
 import com.procurement.procurement_server.dao.user_dao.*;
 import com.procurement.procurement_server.model.user_level.*;
+import com.procurement.procurement_server.util.CommonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.procurement.procurement_server.datastore.UserDatastore;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -53,6 +55,45 @@ public class UserService {
         }
     }
 
+    public ResponseEntity getAllUsers() {
+        try {
+            ArrayList<Staff> list = (ArrayList<Staff>) staffRepo.findAll();
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>("Error", HttpStatus.NO_CONTENT);
+        }
+    }
+
+    public ResponseEntity deleteSpecificUser(String uid) {
+        try {
+            Optional<Staff> user = staffRepo.findById(uid);
+            String type = user.get().getType();
+
+            switch (type) {
+                case CommonConstants.USER_TYPE_PROCUREMENT_MANAGER:
+                    procurementManagerRepo.deleteById(uid);
+                    break;
+                case CommonConstants.USER_TYPE_SITE_MANAGER:
+                    siteManagerRepo.deleteById(uid);
+                    break;
+                case CommonConstants.USER_TYPE_SUPERVISOR:
+                    supervisorRepo.deleteById(uid);
+                    break;
+                case CommonConstants.USER_TYPE_FINANCE_EMPLOYEE:
+                    financeEmployeeRepo.deleteById(uid);
+                    break;
+            }
+            UserDatastore.getSharedInstance().removeFromStore(userRepo.findById(user.get().getStaffId()).get().getEmail());
+            staffRepo.deleteById(uid);
+            userRepo.deleteById(uid);
+            return new ResponseEntity<>(getAllUsers(), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>("Error", HttpStatus.NO_CONTENT);
+        }
+
+    }
 
     public ResponseEntity addNewUser(Object obj) {
         User newUser = convertToUser(obj);

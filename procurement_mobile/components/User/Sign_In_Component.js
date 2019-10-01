@@ -23,6 +23,7 @@ import {
     SCLAlertButton
 } from 'react-native-scl-alert'
 
+
 export default class Login extends Component {
 
     componentDidMount() {
@@ -39,7 +40,8 @@ export default class Login extends Component {
             type: '',
             show: false,
             show1: false,
-            show2: false
+            show2: false,
+            loading: false,
         };
         this.login = this.login.bind(this);
     }
@@ -56,7 +58,7 @@ export default class Login extends Component {
     handleEmail = (text) => {
         this.setState({Email: text})
     };
-    loginButton = () => {
+    signUpButton = () => {
         this.props.navigation.navigate('SignUp')
     };
 
@@ -65,6 +67,7 @@ export default class Login extends Component {
         if (password.length === 0 || email.length === 0) {
             this.setState({show: true})
         } else {
+            this.setState({loading: true});
             let User = {
                 email: email,
                 password: password
@@ -72,94 +75,108 @@ export default class Login extends Component {
             axios.post('http://192.168.16.95:5001/api/construction/user/get', User)
                 .then(res => {
                     let resData = res;
-                    if(resData.data !== "") {
-                        if (resData.data.password === password) {
-                            this.props.navigation.navigate('Second')
-                        } else {
-                            this.setState({show1: true});
-                        }
-                    } else {
-                        this.setState({show1: true});
-                    }
+                    // if (res.data === "No User Found") {
+                    //     this.setState({loading: false});
+                    //     this.setState({show1: true});
+                    // } else if (res.data === "Invalid Password") {
+                    //     this.setState({loading: false});
+                    //     this.setState({show1: true});
+                    //
+                    // } else {
+                    //     this.setState({loading: false});
+                    //     this.props.navigation.navigate('Second')
+                    //
+                    // }
+                    this.props.navigation.navigate('Second');
+
+                    this.setState({loading: false});
+
                 });
         }
     };
 
     render() {
+        if (this.state.loading) {
+            return (
+                <View style={styles.loader}>
+                    <ActivityIndicator size="large" color="yellow"/>
+                </View>
+            );
+        };
         return (
             <KeyboardAvoidingView style={styles.Background}>
-            <ImageBackground source={require('../../assets/upbkg.jpg')} style={styles.Background}
-                             resizeMode={'stretch'}>
-                <View>
-                    {/*<TouchableOpacity style={styles.Icon} activeOpacity={0.5}>*/}
-                    {/*    <Image*/}
-                    {/*        source={require('../../assets/ic_launcher_round.png')}*/}
-                    {/*        //Image Style*/}
-                    {/*        style={styles.IconStyle}*/}
-                    {/*    />*/}
+                <ImageBackground source={require('../../assets/download.jpg')} style={styles.Background}
+                                 resizeMode={'stretch'}>
+                    <View>
+                        {/*<TouchableOpacity style={styles.Icon} activeOpacity={0.5}>*/}
+                        {/*    <Image*/}
+                        {/*        source={require('../../assets/ic_launcher_round.png')}*/}
+                        {/*        //Image Style*/}
+                        {/*        style={styles.IconStyle}*/}
+                        {/*    />*/}
 
-                    {/*</TouchableOpacity>*/}
-                </View>
-                <View>
-                    <TouchableOpacity style={styles.SignIcon} activeOpacity={0.5}>
-                        <Text style={styles.q}>Hi!</Text>
+                        {/*</TouchableOpacity>*/}
+                    </View>
+                    <View>
+                        <TouchableOpacity style={styles.SignIcon} activeOpacity={0.5}>
+                            <Text style={styles.q}>Hi!</Text>
 
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.View}>
-                    <TextInput style={styles.input}
-                               underlineColorAndroid="transparent"
-                               placeholder="Email"
-                               placeholderTextColor="#949580"
-                               autoCapitalize="none"
-                               onChangeText={this.handleEmail}
-                               clearButtonMode='always'
-                    />
-                    <TextInput style={styles.input}
-                               underlineColorAndroid="transparent"
-                               placeholder="Password"
-                               placeholderTextColor="#949580"
-                               autoCapitalize="none"
-                               onChangeText={this.handlePassword}
-                               clearButtonMode='always'
-                    />
-
-                </View>
-                <View style={{flexDirection: "row", paddingLeft: 50, paddingTop: 300,}}>
-                    <TouchableOpacity
-                        style={styles.submitButton}
-                        onPress={
-                            () => this.login(this.state.Password, this.state.Email)
-                        }>
-                        <Text style={styles.submitButtonText}> Login </Text>
-                    </TouchableOpacity>
-                    <SCLAlert
-                        theme="danger"
-                        show={this.state.show}
-                        title="Login fields are empty"
-                        subtitle="Ha! Ha! you forgot to enter your credentials"
-                    ><SCLAlertButton theme="danger" onPress={this.handleClose}>OK</SCLAlertButton></SCLAlert>
-                    <SCLAlert
-                        theme="danger"
-                        show={this.state.show1}
-                        title="Invalid login Details"
-                        subtitle="mm ! Can't find your profile! Try Again"
-                    ><SCLAlertButton theme="danger" onPress={this.handleClose1}>OK</SCLAlertButton></SCLAlert>
-                </View>
-                <View style={{flexDirection: 'row', paddingTop: -530,}}>
-                    <Text style={styles.q1}>Need to Register </Text>
-                    <View style={{flexDirection: 'row', paddingTop: 35, marginLeft: -85}}>
-                        <TouchableOpacity
-                            style={styles.submitButton1}
-                            onPress={
-                                () => this.loginButton()
-                            }>
-                            <Text style={styles.submitButtonText}> Sign Up </Text>
                         </TouchableOpacity>
                     </View>
-                </View>
-            </ImageBackground>
+
+                    <View style={styles.viewForm}>
+                        <TextInput style={styles.input}
+                                   underlineColorAndroid="transparent"
+                                   placeholder="Email"
+                                   placeholderTextColor="#61b53f"
+                                   autoCapitalize="none"
+                                   onChangeText={this.handleEmail}
+                                   clearButtonMode='always'
+                        />
+                        <TextInput style={styles.input}
+                                   underlineColorAndroid="transparent"
+                                   placeholder="Password"
+                                   placeholderTextColor="#61b53f"
+                                   autoCapitalize="none"
+                                   onChangeText={this.handlePassword}
+                                   clearButtonMode='always'
+                        />
+
+                    </View>
+                    <View style={{flexDirection: "row", paddingLeft: 50, paddingTop: 250,}}>
+                        <TouchableOpacity
+                            style={styles.submitButton}
+                            onPress={
+                                () => this.login(this.state.Password, this.state.Email)
+                            }>
+                            <Text style={styles.submitButtonText}> Login </Text>
+                        </TouchableOpacity>
+                        <SCLAlert
+                            theme="danger"
+                            show={this.state.show}
+                            title="Login fields are empty"
+                            subtitle="Ha! Ha! you forgot to enter your credentials"
+                        ><SCLAlertButton theme="danger" onPress={this.handleClose}>OK</SCLAlertButton></SCLAlert>
+                        <SCLAlert
+                            theme="danger"
+                            show={this.state.show1}
+                            title="Invalid login Details"
+                            subtitle="mm ! Can't find your profile! Try Again"
+                        ><SCLAlertButton theme="danger" onPress={this.handleClose1}>OK</SCLAlertButton></SCLAlert>
+                    </View>
+                    <View style={{flexDirection: 'row', paddingTop: -530,}}>
+                        <Text style={styles.signUpQuote}>Create Account</Text>
+                        <View style={{flexDirection: 'row', paddingTop: 35, marginLeft: -85}}>
+                            <TouchableOpacity
+                                style={styles.registerButton}
+                                onPress={
+                                    () => this.signUpButton()
+                                }>
+                                <Text style={styles.submitButtonText}> Sign Up </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ImageBackground>
             </KeyboardAvoidingView>
         )
     }
@@ -177,12 +194,12 @@ const styles = StyleSheet.create({
         fontFamily: 'sans-serif',
         color: "#ffffff"
     },
-    q1: {
-        marginLeft: 55,
+    signUpQuote: {
+        marginLeft: 70,
         marginTop: 40,
         fontWeight: 'bold',
         fontSize: 16,
-        color: "#f8102e"
+        color: "#00791f"
     },
     q2: {
         marginTop: 40,
@@ -193,16 +210,15 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         color: "#fff2f9"
     },
-    View: {
+    viewForm: {
         position: 'absolute',
-        backgroundColor: 'black',
-        opacity: 0.5,
+        backgroundColor: '#ffffff',
         width: (Dimensions.get('window').width / 4) * 3,
-        height: 300,
-        borderColor: '#ffffff',
+        height: 320,
         borderRadius: 8,
-        borderWidth: 0.5,
-        marginTop: Dimensions.get('window').height / 2.6,
+        borderWidth: 2,
+        borderColor: '#61b53f',
+        marginTop: 200,
         marginLeft: (Dimensions.get('window').width / 4) - (Dimensions.get('window').width / 8)
     },
     textStyle: {
@@ -228,35 +244,37 @@ const styles = StyleSheet.create({
         borderColor: '#3e7dff'
     },
     input: {
-        margin: 15,
+        margin: 18,
         height: 40,
         backgroundColor: 'transparent',
-        color: "#fff2f9",
+        color: "#61b53f",
         borderWidth: 1,
-        borderColor: '#3e7dff'
+        borderColor: '#62a23a'
     },
-    submitButton1: {
+    registerButton: {
         borderWidth: 0.5,
         borderRadius: 8,
         backgroundColor: 'transparent',
-        marginLeft: 100,
+        marginLeft: 118,
         paddingTop: 5,
         width: 70,
         height: 35,
         textAlign: 'center',
+        borderColor : '#62a23a'
     },
     submitButton: {
         borderWidth: 0.5,
         borderRadius: 8,
-        backgroundColor: '#7BA6EF',
-        marginLeft: 100,
+        backgroundColor: 'white',
+        marginLeft: 90,
         paddingTop: 5,
         width: 70,
         height: 35,
         textAlign: 'center',
+        borderColor : '#62a23a'
     },
     submitButtonText: {
-        color: 'white',
+        color: '#61b53f',
         textAlign: 'center',
     },
     Icon: {
@@ -296,6 +314,12 @@ const styles = StyleSheet.create({
     Background: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height
+    },
+    loader: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff"
     },
 });
 
