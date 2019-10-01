@@ -1,0 +1,48 @@
+{
+  "name": "UXXmobile",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.3.0",
+    "@material-ui/icons": "^4.2.1",
+    "axios": "^0.19.0",
+    "material-ui": "^0.20.2",
+    "react": "16.8.6",
+    "react-dom": "^16.8.6",
+    "react-native": "0.60.4",
+    "react-native-elements": "^1.1.0",
+    "react-native-gesture-handler": "^1.3.0",
+    "react-native-image-slider": "^2.0.3",
+    "react-native-image-slider-show": "^1.0.3",
+    "react-native-keyboard-spacer": "^0.4.1",
+    "react-native-material-menu": "^0.6.6",
+    "react-native-navigation": "^2.26.0",
+    "react-native-paper": "^2.16.0",
+    "react-native-scl-alert": "^1.2.1",
+    "react-native-splash-screen": "^3.0.6",
+    "react-native-vector-icons": "^6.6.0",
+    "react-navigation": "^2.18.3",
+    "react-navigation-material-bottom-tabs": "^0.1.2",
+    "react-navigation-transitions": "^1.0.12",
+    "react-responsive-carousel": "^3.1.49",
+    "react-simple-sidenav": "^1.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.5.5",
+    "@babel/runtime": "7.5.5",
+    "@react-native-community/eslint-config": "0.0.3",
+    "babel-jest": "24.8.0",
+    "eslint": "6.1.0",
+    "jest": "24.8.0",
+    "metro-react-native-babel-preset": "0.54.1",
+    "react-test-renderer": "16.8.6"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

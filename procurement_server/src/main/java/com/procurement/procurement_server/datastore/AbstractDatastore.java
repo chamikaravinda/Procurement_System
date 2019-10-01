@@ -13,4 +13,6 @@ public abstract class AbstractDatastore <T extends DatabaseEvent> {
 
     public abstract T getUserFromStore(String key);
 
+    public abstract void addToStore(Object obj);
+
 }
