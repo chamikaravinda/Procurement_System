@@ -7,6 +7,7 @@ public class CommonConstants {
     public static final int GET_AVAILABLE_SUPPLIER_ITEMS = 27;
     public static final int GET_ALL_USERS = 29;
     public static final int DELETE_SPECIFIC_USER = 30;
+    public static final int GET_ALL_ORDERS = 31;
 
     public static final String USER_TYPE_PROCUREMENT_MANAGER = "Procurement Manager";
     public static final String USER_TYPE_SITE_MANAGER = "Site Manager";
