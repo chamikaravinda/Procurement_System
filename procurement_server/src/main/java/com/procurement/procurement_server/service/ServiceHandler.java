@@ -1,17 +1,25 @@
 package com.procurement.procurement_server.service;
 
-
-import com.procurement.procurement_server.model.supplier_level.Items;
+import com.procurement.procurement_server.model.Order;
+import com.procurement.procurement_server.model.Requistion;
 import com.procurement.procurement_server.model.user_level.User;
 import com.procurement.procurement_server.service.user_service.UserService;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.procurement.procurement_server.util.ApprovedOrder;
 import com.procurement.procurement_server.util.CommonConstants;
+import com.procurement.procurement_server.util.Generator;
+import com.procurement.procurement_server.util.OrderBroker;
+import com.procurement.procurement_server.util.OrderBuilder;
+import com.procurement.procurement_server.util.PendingOrder;
 
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 @Component
 public class ServiceHandler {
@@ -23,8 +31,12 @@ public class ServiceHandler {
 
     @Autowired
     DataServer dataServer;
+    
+    @Autowired
+    IOrderService orderService;
 
-    public ResponseEntity handleServiceRequest(String reqId, Object obj, String uid) {
+    
+    public ResponseEntity<Object> handleServiceRequest(String reqId, Object obj, String uid) {
         if (!isIsInitialized()) {
             startDataServer();
             setIsInitialized(true);
@@ -35,11 +47,15 @@ public class ServiceHandler {
             case CommonConstants.ADD_USER_REQUEST:
                 return addNewUser(obj);
             case CommonConstants.GET_AVAILABLE_SUPPLIER_ITEMS:
-                return getAvailableItemsList();
+                return null;
             case CommonConstants.GET_ALL_USERS:
                 return getAllUsers();
             case CommonConstants.DELETE_SPECIFIC_USER:
                 return deleteSpecificUser(uid);
+            case CommonConstants.ADD_ORDER_REQUEST:
+            	return handleOrder((Order)obj); 
+            case CommonConstants.UPDATE_ORDER_REQUEST : 
+            	return handleOrder((Order) obj);
             default:
                 return new ResponseEntity("Failed", HttpStatus.OK);
         }
@@ -66,6 +82,55 @@ public class ServiceHandler {
         ServiceHandler.isInitialized = isInitialized;
     }
 
+    public ResponseEntity<Object> handleOrder(Order order ) {
+    	
+    
+    		int orderItemQuantity = orderService.calculateQuantity(order.getItems());
+    		double orderTotal = orderService.calculateTotal(order.getItems());
+    		
+    		Requistion requisition = new Requistion();
+    		
+    		
+    		ApprovedOrder approveOrder = new ApprovedOrder(requisition);
+    		PendingOrder pendingOrder = new PendingOrder(requisition);
+    		
+    		
+    		if( order.get_idAsObjectId() == null ) {
+    			System.out.println("id is null");
+    			requisition.set_id(new ObjectId());
+    		}else {
+    			System.out.println("id is not null");
+    			requisition = order.getRequistion();
+    		}
+    		
+    		/*-----------------------------------------------------------*/
+    		
+    		OrderBroker broker = new OrderBroker();		
+    		
+    		if( orderTotal > CommonConstants.ORDER_LIMIT ) {
+    			broker.takeOrder(pendingOrder);
+    			requisition =  broker.placeOrder();
+    		}else {
+    			broker.takeOrder(approveOrder);
+    			requisition = broker.placeOrder();
+    		}
+    		
+    		
+    		Order newOrder = new OrderBuilder(order.get_idAsObjectId())
+    				.setItems(order.getItems())
+    				.setOrderDate(Generator.getCurrentDate())
+    				.setPayment(null)
+    				.setQuantity(orderItemQuantity)
+    				.setRequisition(null)
+    				.setTotalAmount(orderTotal)
+    				.build();
+    		
+    		return new ResponseEntity<>(orderService.addOrder(newOrder, requisition), HttpStatus.OK);
+    	
+	
+    }
+    
+    /*
     public ResponseEntity getAvailableItemsList() {
         ArrayList<Items> itemsList = new ArrayList<>();
         Items items = new Items();
@@ -73,7 +138,7 @@ public class ServiceHandler {
         items.setItemName("Bricks");
         itemsList.add(items);
 
-        items = new Items();
+        items = new Item();
         items.set_id(2);
         items.setItemName("Cement");
         itemsList.add(items);
@@ -95,6 +160,7 @@ public class ServiceHandler {
 
         return new ResponseEntity<Object>(itemsList, HttpStatus.OK);
     }
+    */
 
     private ResponseEntity getAllUsers() {
         return userService.getAllUsers();
