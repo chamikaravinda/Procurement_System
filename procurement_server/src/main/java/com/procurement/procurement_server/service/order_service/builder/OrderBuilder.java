@@ -1,14 +1,12 @@
-package com.procurement.procurement_server.util;
+package com.procurement.procurement_server.service.order_service.builder;
 
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import com.procurement.procurement_server.model.Order;
-import com.procurement.procurement_server.model.Payment;
-import com.procurement.procurement_server.model.Requistion;
+import com.procurement.procurement_server.model.order_level.Order;
+import com.procurement.procurement_server.model.order_level.Payment;
+import com.procurement.procurement_server.model.order_level.Requistion;
 import com.procurement.procurement_server.model.supplier_level.Item;
 
 public class OrderBuilder {

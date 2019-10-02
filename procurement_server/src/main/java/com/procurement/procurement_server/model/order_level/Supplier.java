@@ -1,4 +1,4 @@
-package com.procurement.procurement_server.model;
+package com.procurement.procurement_server.model.order_level;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

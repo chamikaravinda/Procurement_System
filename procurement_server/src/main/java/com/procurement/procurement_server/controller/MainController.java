@@ -2,7 +2,7 @@ package com.procurement.procurement_server.controller;
 
 import com.procurement.procurement_server.dao.ItemRepo;
 import com.procurement.procurement_server.dao.OrderRepo;
-import com.procurement.procurement_server.model.Order;
+import com.procurement.procurement_server.model.order_level.Order;
 import com.procurement.procurement_server.model.supplier_level.Item;
 import com.procurement.procurement_server.model.user_level.User;
 import com.procurement.procurement_server.model.user_level.UserAdaptor;

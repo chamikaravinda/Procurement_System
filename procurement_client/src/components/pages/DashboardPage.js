@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBRow, MDBIcon} from "mdbreact";
 import axios from "axios";
 import {MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
@@ -11,6 +11,7 @@ export default class DashboardPage extends Component {
 
         this.state = {
             allUsers: [],
+            allOrders: [],
             param: "chamika@gmail.com",
             name: '',
             email: ''
@@ -47,9 +48,9 @@ export default class DashboardPage extends Component {
 
         axios.get('http://localhost:5001/api/construction/data?RT=31')
             .then(res => {
-                console.log(res.data);
+                console.log("Order Data" + res.data);
                 this.setState({
-                    allUsers: res.data,
+                    allOrders: res.data,
 
                 })
             })
@@ -152,46 +153,53 @@ export default class DashboardPage extends Component {
                                     <>
                                         <div className="container border-bottom">
                                             <br/> <br/>
-                                            <h4>All users</h4>
+                                            <h4>All Orders</h4>
                                             <br/> <br/>
                                             <MDBTable bordered>
                                                 <MDBTableHead>
                                                     <tr className="bg-dark text-light">
-                                                        <th>Staff Id</th>
-                                                        <th>User Name</th>
-                                                        <th>Designation</th>
+                                                        <th>Order Id</th>
+                                                        <th>Items</th>
+                                                        <th>Ordered By</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </MDBTableHead>
                                                 <MDBTableBody>
-                                                    {this.state.allUsers.map((result, index) => (
+                                                    {this.state.allOrders.map((res, index) => (
                                                             <tr>
-                                                                <td>{result.staffId}</td>
-                                                                <td>{result.firstName}</td>
-                                                                <td>{result.type}</td>
-                                                                <td>
-                                                                    <div className="btn-group">
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={() => this.fileDelete(result.staffId)}
-                                                                            className="btn btn-danger btn-sm"
-                                                                        >
-                                                                            {" "}<MDBIcon far icon="trash-alt"/>
-                                                                            {" "} Delete{" "}
-                                                                        </button>
-                                                                        {/*<Link to={"/report/" + result.staffId}*/}
-                                                                        {/*      className="btn btn-primary btn-sm">*/}
-                                                                        {/*    {" "}<MDBIcon icon="chart-line"/>*/}
-                                                                        {/*    {" "} Analyse{" "}*/}
-                                                                        {/*</Link>*/}
-                                                                        {/*<Link to={"/assign/" + result.staffId}*/}
-                                                                        {/*      className="btn btn-primary btn-sm">*/}
-                                                                        {/*    {" "}<MDBIcon icon="bug"*/}
-                                                                        {/*                  style={{color: '#FFF'}}/>*/}
-                                                                        {/*    {" "} Assign{" "}*/}
-                                                                        {/*</Link>*/}
-                                                                    </div>
-                                                                </td>
+                                                                <td>{res._orderId}</td>
+                                                                <td>{
+                                                                    res.items.map((result, index) => (
+                                                                        <tr>
+                                                                            <td>{result._id}</td>
+                                                                            < td> {result.itemName}</td>
+                                                                        </tr>
+                                                                    ))
+                                                                }</td>
+                                                                <td>{res.placedEmployee}</td>
+                                                                {/*<td>*/}
+                                                                {/*    <div className="btn-group">*/}
+                                                                {/*        <button*/}
+                                                                {/*            type="button"*/}
+                                                                {/*            onClick={() => this.fileDelete(res.staffId)}*/}
+                                                                {/*            className="btn btn-danger btn-sm"*/}
+                                                                {/*        >*/}
+                                                                {/*            {" "}<MDBIcon far icon="trash-alt"/>*/}
+                                                                {/*            {" "} Delete{" "}*/}
+                                                                {/*        </button>*/}
+                                                                {/*        /!*<Link to={"/report/" + result.staffId}*!/*/}
+                                                                {/*        /!*      className="btn btn-primary btn-sm">*!/*/}
+                                                                {/*        /!*    {" "}<MDBIcon icon="chart-line"/>*!/*/}
+                                                                {/*        /!*    {" "} Analyse{" "}*!/*/}
+                                                                {/*        /!*</Link>*!/*/}
+                                                                {/*        /!*<Link to={"/assign/" + result.staffId}*!/*/}
+                                                                {/*        /!*      className="btn btn-primary btn-sm">*!/*/}
+                                                                {/*        /!*    {" "}<MDBIcon icon="bug"*!/*/}
+                                                                {/*        /!*                  style={{color: '#FFF'}}/>*!/*/}
+                                                                {/*        /!*    {" "} Assign{" "}*!/*/}
+                                                                {/*        /!*</Link>*!/*/}
+                                                                {/*    </div>*/}
+                                                                {/*</td>*/}
                                                             </tr>
                                                         )
                                                     )}
