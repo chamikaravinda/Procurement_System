@@ -1,9 +1,9 @@
-package com.procurement.procurement_server.service;
+package com.procurement.procurement_server.service.order_service.builder;
 
 import java.util.List;
 
-import com.procurement.procurement_server.model.Order;
-import com.procurement.procurement_server.model.Requistion;
+import com.procurement.procurement_server.model.order_level.Order;
+import com.procurement.procurement_server.model.order_level.Requistion;
 import com.procurement.procurement_server.model.supplier_level.Item;
 
 

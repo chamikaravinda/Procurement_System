@@ -1,6 +1,6 @@
-package com.procurement.procurement_server.util;
+package com.procurement.procurement_server.service.order_service.builder;
 
-import com.procurement.procurement_server.model.Requistion;
+import com.procurement.procurement_server.model.order_level.Requistion;
 
 public class OrderBroker {
 

@@ -1,4 +1,4 @@
-package com.procurement.procurement_server.model;
+package com.procurement.procurement_server.model.order_level;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
