@@ -45,9 +45,8 @@ public class MainController {
     }
 
     @GetMapping("/data")
-    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,
-                                  @RequestParam(value = "Uid", defaultValue = "") String uid) {
-        System.out.println(reqTyp);
+    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,@RequestParam(value = "Uid", defaultValue = "") String uid) {
+        System.out.println("Request type :"+reqTyp);
         return serviceHandler.handleServiceRequest(reqTyp, new Object(), uid);
     }
     
@@ -77,17 +76,5 @@ public class MainController {
 	
 	
 	
-    	
-    /*-----------------------------------------------------------------*/
-    
-    /* Kalana Elapatha */
-
-//    @GetMapping("/addSupplier")
-//    public ResponseEntity addSupplier(
-//            @RequestParam(value = "SP") String reqTyp) {
-////        return serviceHandler.handleServiceRequest(reqTyp);
-//    }
-//
-    /* Kalana Elapatha  not completed yet*/
-
+ 
 }
