@@ -160,23 +160,25 @@ export default class DashboardPage extends Component {
                                                     <tr className="bg-dark text-light">
                                                         <th>Order Id</th>
                                                         <th>Items</th>
-                                                        <th>Ordered By</th>
-                                                        <th>Actions</th>
+                                                        <th>Status</th>
+                                                        <th>Amount</th>
                                                     </tr>
                                                 </MDBTableHead>
                                                 <MDBTableBody>
                                                     {this.state.allOrders.map((res, index) => (
                                                             <tr>
-                                                                <td>{res._orderId}</td>
+                                                                <td>{res._id}</td>
                                                                 <td>{
                                                                     res.items.map((result, index) => (
                                                                         <tr>
                                                                             <td>{result._id}</td>
-                                                                            < td> {result.itemName}</td>
+                                                                            < td>{result.itemName}</td>
                                                                         </tr>
                                                                     ))
                                                                 }</td>
-                                                                <td>{res.placedEmployee}</td>
+                                                                <td>{res.requistion.status}</td>
+                                                                <td>{res.totalAmount}</td>
+
                                                                 {/*<td>*/}
                                                                 {/*    <div className="btn-group">*/}
                                                                 {/*        <button*/}

@@ -1,6 +1,5 @@
 package com.procurement.procurement_server.service;
 
-
 import com.procurement.procurement_server.model.order_level.Order;
 import com.procurement.procurement_server.model.order_level.Requistion;
 import com.procurement.procurement_server.model.user_level.User;
@@ -11,12 +10,11 @@ import com.procurement.procurement_server.service.order_service.builder.OrderBui
 import com.procurement.procurement_server.service.order_service.builder.PendingOrder;
 import com.procurement.procurement_server.service.user_service.UserService;
 import com.procurement.procurement_server.util.*;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 
 @Component
 public class ServiceHandler {
@@ -130,33 +128,33 @@ public class ServiceHandler {
     
 
     public ResponseEntity getAvailableItemsList() {
-        ArrayList<Items> itemsList = new ArrayList<>();
-        Items items = new Items();
-        items.set_id(1);
-        items.setItemName("Bricks");
-        itemsList.add(items);
+//        ArrayList<Items> itemsList = new ArrayList<>();
+//        Items items = new Items();
+//        items.set_id(1);
+//        items.setItemName("Bricks");
+//        itemsList.add(items);
+//
+//        items = new Item();
+//        items.set_id(2);
+//        items.setItemName("Cement");
+//        itemsList.add(items);
+//
+//        items = new Items();
+//        items.set_id(3);
+//        items.setItemName("Mattel");
+//        itemsList.add(items);
+//
+//        items = new Items();
+//        items.set_id(4);
+//        items.setItemName("Cement Bricks");
+//        itemsList.add(items);
+//
+//        items = new Items();
+//        items.set_id(5);
+////        items.setItemName("Roofing Sheet");
+//        itemsList.add(items);
 
-        items = new Item();
-        items.set_id(2);
-        items.setItemName("Cement");
-        itemsList.add(items);
-
-        items = new Items();
-        items.set_id(3);
-        items.setItemName("Mattel");
-        itemsList.add(items);
-
-        items = new Items();
-        items.set_id(4);
-        items.setItemName("Cement Bricks");
-        itemsList.add(items);
-
-        items = new Items();
-        items.set_id(5);
-        items.setItemName("Roofing Sheet");
-        itemsList.add(items);
-
-        return new ResponseEntity<Object>(itemsList, HttpStatus.OK);
+        return new ResponseEntity<Object>("Ok", HttpStatus.OK);
     }
 
 
@@ -166,6 +164,10 @@ public class ServiceHandler {
 
     private ResponseEntity deleteSpecificUser(String uid) {
         return userService.deleteSpecificUser(uid);
+    }
+
+    private ResponseEntity getAllOrders() {
+        return new ResponseEntity<Object>(orderService.getAllOrders(), HttpStatus.OK);
     }
 
 }
