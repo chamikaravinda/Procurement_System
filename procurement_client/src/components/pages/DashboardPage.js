@@ -256,7 +256,6 @@ export default class DashboardPage extends Component {
         </MDBContainer>
 
         <br/> <br/>
-
         <MDBContainer className="text-center">
              <MDBRow md="12">
                 <MDBCol md="12">
@@ -312,9 +311,6 @@ export default class DashboardPage extends Component {
             </MDBRow>
         </MDBContainer>
     </React.Fragment>;
-
-
-
 
         var _getSupervisorBoard = () =>
         <React.Fragment>

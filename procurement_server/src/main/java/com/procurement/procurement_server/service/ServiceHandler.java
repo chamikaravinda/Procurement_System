@@ -209,7 +209,6 @@ public class ServiceHandler {
     }
     private  ResponseEntity getItemWithoutQty() {
       return itemService.getItemWithoutQty();
-
     }
 
     private  ResponseEntity getItemWithQty() {
@@ -220,5 +219,4 @@ public class ServiceHandler {
     private ResponseEntity getStaffMembersByType(String type) {
     	return staffService.getStaffMembersByType(type);
     }
-
 }
