@@ -64,26 +64,19 @@ public class MainController {
 
 
    /*-----------test add and get item-----------------------------*/
-    @Autowired
-	ItemRepo itemRepo;
+   
     
-    @Autowired
-    OrderRepo orderRepo;
-    
-	@PostMapping(path="/item/add")
-	public Item addItem( @RequestBody Item item ) {
-		return itemRepo.save(item);
-	}
 	
-	@GetMapping( path = "/item/all")
-	public List<Item> getAllItems(){
-		return itemRepo.findAll();
-	}
+    @PostMapping("item/addItem")
+    public ResponseEntity addNewItem(@RequestBody Object obj) {
+    	System.out.println("@@@@@@@@@@@@@@@@ Main Controoller with Item");
+        System.out.println(obj);
+        return serviceHandler.handleServiceRequest("1001", obj,"");
+    }
 	
-	@GetMapping( path = "/order/all")
-	public List<Order> getAllOrders(){
-		return orderRepo.findAll();
-	}
+	
+	
+	
     	
     /*-----------------------------------------------------------------*/
     
