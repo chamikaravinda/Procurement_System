@@ -3,14 +3,19 @@ package com.procurement.procurement_server.service;
 
 import com.procurement.procurement_server.model.order_level.Order;
 import com.procurement.procurement_server.model.order_level.Requistion;
+import com.procurement.procurement_server.model.site_level.Site;
 import com.procurement.procurement_server.model.user_level.User;
 import com.procurement.procurement_server.service.order_service.*;
 import com.procurement.procurement_server.service.order_service.builder.ApprovedOrder;
 import com.procurement.procurement_server.service.order_service.builder.OrderBroker;
 import com.procurement.procurement_server.service.order_service.builder.OrderBuilder;
 import com.procurement.procurement_server.service.order_service.builder.PendingOrder;
+import com.procurement.procurement_server.service.site_service.SiteServiceImpl;
+import com.procurement.procurement_server.service.user_service.StaffService;
 import com.procurement.procurement_server.service.user_service.UserService;
 import com.procurement.procurement_server.util.*;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +36,12 @@ public class ServiceHandler {
 
     @Autowired
     OrderServiceImpl orderService;
+    
+    @Autowired
+    SiteServiceImpl siteService;
+    
+    @Autowired
+    StaffService staffService;
 
     public ResponseEntity handleServiceRequest(String reqId, Object obj, String uid) {
         if (!isIsInitialized()) {
@@ -52,13 +63,17 @@ public class ServiceHandler {
             	return handleOrder((Order)obj);
             case CommonConstants.UPDATE_ORDER_REQUEST :
             	return handleOrder((Order) obj);
-                case CommonConstants.GET_ALL_ORDERS:
+            case CommonConstants.GET_ALL_ORDERS:
                     return getAllOrders();
+            case CommonConstants.ADD_SITE_REQUEST:
+                return addSite((Site) obj);
+            case CommonConstants.GET_STAFF_BY_TYPE :
+            	return getStaffMembersByType(uid);
             default:
                 return new ResponseEntity("Failed", HttpStatus.OK);
         }
     }
-
+    
     private ResponseEntity getRequiredUser(Object obj) {
         return userService.getRequiredUser((User) obj);
     }
@@ -167,5 +182,17 @@ public class ServiceHandler {
     private ResponseEntity deleteSpecificUser(String uid) {
         return userService.deleteSpecificUser(uid);
     }
-
+    
+    private ResponseEntity addSite(Site site) {
+    	return siteService.addSite(site);
+    } 
+    
+    private ResponseEntity getAllOrders() {
+    	return null;
+    }
+    
+    
+    private ResponseEntity getStaffMembersByType(String type) {
+    	return staffService.getStaffMembersByType(type);
+    }
 }

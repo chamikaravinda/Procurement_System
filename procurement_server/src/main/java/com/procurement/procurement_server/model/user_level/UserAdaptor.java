@@ -2,13 +2,23 @@ package com.procurement.procurement_server.model.user_level;
 
 public class UserAdaptor {
 
+	private String id;
     private String firstName;
     private String lastName;
     private String type;
     private String email;
     private String password;
 
-    public String getFirstName() {
+    
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
         return firstName;
     }
 

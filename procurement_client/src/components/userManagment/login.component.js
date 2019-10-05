@@ -69,6 +69,7 @@ export default class UserLogin extends Component {
                     } else {
                         localStorage.setItem('name', res.data.firstName);
                         localStorage.setItem('userType', res.data.type);
+                        localStorage.setItem('id', res.data.id);
                         this.props.history.push("/main");
                         // window.location.reload();
                     }
