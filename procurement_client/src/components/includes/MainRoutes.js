@@ -8,6 +8,8 @@ import UserRegister from '../userManagment/register.component';
 import AddSupplier from '../supplierManagement/AddSuppliers';
 import Main from '../pages/MainPage';
 
+import AddItem from '../supplierManagement/addItem';
+
 class MainRoutes extends React.Component {
     render() {
         return (
@@ -15,6 +17,7 @@ class MainRoutes extends React.Component {
                 <Route path='/' exact component={UserLogin} />
                 <Route path='/register' component={UserRegister} />
                 <Route path='/main' component={Main} />
+                <Route path='/addItem' component={AddItem} />
             </Switch>
         );
     }

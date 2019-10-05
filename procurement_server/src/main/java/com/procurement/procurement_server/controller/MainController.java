@@ -53,9 +53,8 @@ public class MainController {
     
     
     @GetMapping("/data")
-    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,
-                                  @RequestParam(value = "Uid", defaultValue = "") String uid) {
-        System.out.println(reqTyp);
+    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,@RequestParam(value = "Uid", defaultValue = "") String uid) {
+        System.out.println("Request type :"+reqTyp);
         return serviceHandler.handleServiceRequest(reqTyp, new Object(), uid);
     }
     
@@ -72,37 +71,18 @@ public class MainController {
 
 
    /*-----------test add and get item-----------------------------*/
-    @Autowired
-	ItemRepo itemRepo;
+   
     
-    @Autowired
-    OrderRepo orderRepo;
-    
-	@PostMapping(path="/item/add")
-	public Item addItem( @RequestBody Item item ) {
-		return itemRepo.save(item);
-	}
 	
-	@GetMapping( path = "/item/all")
-	public List<Item> getAllItems(){
-		return itemRepo.findAll();
-	}
-	
-	@GetMapping( path = "/order/all")
-	public List<Order> getAllOrders(){
-		return orderRepo.findAll();
-	}
+    @PostMapping("item/addItem")
+    public ResponseEntity addNewItem(@RequestBody Object obj) {
     	
-    /*-----------------------------------------------------------------*/
-    
-    /* Kalana Elapatha */
-
-//    @GetMapping("/addSupplier")
-//    public ResponseEntity addSupplier(
-//            @RequestParam(value = "SP") String reqTyp) {
-////        return serviceHandler.handleServiceRequest(reqTyp);
-//    }
-//
-    /* Kalana Elapatha  not completed yet*/
-
+        System.out.println(obj);
+        return serviceHandler.handleServiceRequest("1001", obj,"");
+    }
+	
+	
+	
+	
+ 
 }

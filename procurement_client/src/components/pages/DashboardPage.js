@@ -14,12 +14,14 @@ export default class DashboardPage extends Component {
             allOrders: [],
             param: "chamika@gmail.com",
             name: '',
-            email: ''
+            email: '',
+            withQtyItem:[],
+            withoutQtyItem:[]
         }
     }
 
     fileDelete(_id) {
-        console.log("AUto Called" + _id);
+        console.log("Auto Called" + _id);
         axios.get('http://localhost:5001/api/construction/data?RT=30&Uid=' + _id)
             .then(res => {
                 console.log("Response From Delete Request" + res.data.body);
@@ -56,30 +58,38 @@ export default class DashboardPage extends Component {
             })
             .catch(err => {
                 console.log(err);
+            });
+
+            axios.get('http://localhost:5001/api/construction/data?RT=1003')
+            .then(res => {
+                console.log("item with quantity" + res.data);
+                this.setState({
+                    withQtyItem: res.data,
+
+                })
             })
+            .catch(err => {
+                console.log(err);
+            });
+
+            axios.get('http://localhost:5001/api/construction/data?RT=1004')
+            .then(res => {
+                console.log("item without quantity" + res.data);
+                this.setState({
+                    withoutQtyItem: res.data,
+
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+            
     }
 
-    OnChange = event => {
-        this.setState({name: event.target.value});
-        this.setState({email: event.target.value});
-    }
+    
 
-    onSubmit(e) {
-
-        const addSupplier = {
-            name: this.state.name,
-            email: this.state.email
-        };
-        e.preventDefault();
-
-        // axios.post('https://localhost/27017/api/addSupplier' ,{ addSupplier })
-        //
-        //     .then((response) => {
-        //         console.log(response);
-        //     }, (error) => {
-        //         console.log(error);
-        //     });
-    }
+    
 
 
     render() {
@@ -120,17 +130,7 @@ export default class DashboardPage extends Component {
                                                                             {" "}<MDBIcon far icon="trash-alt"/>
                                                                             {" "} Delete{" "}
                                                                         </button>
-                                                                        {/*<Link to={"/report/" + result.staffId}*/}
-                                                                        {/*      className="btn btn-primary btn-sm">*/}
-                                                                        {/*    {" "}<MDBIcon icon="chart-line"/>*/}
-                                                                        {/*    {" "} Analyse{" "}*/}
-                                                                        {/*</Link>*/}
-                                                                        {/*<Link to={"/assign/" + result.staffId}*/}
-                                                                        {/*      className="btn btn-primary btn-sm">*/}
-                                                                        {/*    {" "}<MDBIcon icon="bug"*/}
-                                                                        {/*                  style={{color: '#FFF'}}/>*/}
-                                                                        {/*    {" "} Assign{" "}*/}
-                                                                        {/*</Link>*/}
+                                                                        
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -172,34 +172,12 @@ export default class DashboardPage extends Component {
                                                                     res.items.map((result, index) => (
                                                                         <tr>
                                                                             <td>{result._id}</td>
-                                                                            < td> {result.itemName}</td>
+                                                                            <td>{result.itemName}</td>
                                                                         </tr>
                                                                     ))
                                                                 }</td>
                                                                 <td>{res.placedEmployee}</td>
-                                                                {/*<td>*/}
-                                                                {/*    <div className="btn-group">*/}
-                                                                {/*        <button*/}
-                                                                {/*            type="button"*/}
-                                                                {/*            onClick={() => this.fileDelete(res.staffId)}*/}
-                                                                {/*            className="btn btn-danger btn-sm"*/}
-                                                                {/*        >*/}
-                                                                {/*            {" "}<MDBIcon far icon="trash-alt"/>*/}
-                                                                {/*            {" "} Delete{" "}*/}
-                                                                {/*        </button>*/}
-                                                                {/*        /!*<Link to={"/report/" + result.staffId}*!/*/}
-                                                                {/*        /!*      className="btn btn-primary btn-sm">*!/*/}
-                                                                {/*        /!*    {" "}<MDBIcon icon="chart-line"/>*!/*/}
-                                                                {/*        /!*    {" "} Analyse{" "}*!/*/}
-                                                                {/*        /!*</Link>*!/*/}
-                                                                {/*        /!*<Link to={"/assign/" + result.staffId}*!/*/}
-                                                                {/*        /!*      className="btn btn-primary btn-sm">*!/*/}
-                                                                {/*        /!*    {" "}<MDBIcon icon="bug"*!/*/}
-                                                                {/*        /!*                  style={{color: '#FFF'}}/>*!/*/}
-                                                                {/*        /!*    {" "} Assign{" "}*!/*/}
-                                                                {/*        /!*</Link>*!/*/}
-                                                                {/*    </div>*/}
-                                                                {/*</td>*/}
+                                                               
                                                             </tr>
                                                         )
                                                     )}
@@ -221,9 +199,122 @@ export default class DashboardPage extends Component {
             </React.Fragment>;
 
         var _getFinancialEmployeeBoard = () =>
-            <React.Fragment>
-                <h6>Wlcome</h6>
-            </React.Fragment>;
+        <React.Fragment>
+        <MDBContainer className="text-center">
+             <MDBRow md="12">
+                <MDBCol md="12">
+                    <MDBCard>
+                        <MDBCardBody>
+                            <>
+                                <div className="container border-bottom">
+                                    <br/> <br/>
+                                    <h4>Item with Quantity</h4>
+                                    <br/> <br/>
+                                    <MDBTable bordered>
+                                        <MDBTableHead>
+                                            <tr className="bg-dark text-light">
+                                                <th>Item Id</th>
+                                                <th>Item Name</th>
+                                                <th>Unite Price</th>
+                                                <th>Item Quantity</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                                    {this.state.withQtyItem.map((res,index) => (
+                                                            <tr>
+                                                                <td>{res._id}</td>
+                                                                <td>{res.itemName}</td>
+                                                                <td>{res.unitPrice}</td>
+                                                                <td>{res.quantity}</td>
+                                                                
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    )}
+
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                </div>
+                            </>
+                        </MDBCardBody>
+                    </MDBCard>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
+
+        <br/> <br/>
+
+        <MDBContainer className="text-center">
+             <MDBRow md="12">
+                <MDBCol md="12">
+                    <MDBCard>
+                        <MDBCardBody>
+                            <>
+                                <div className="container border-bottom">
+                                    <br/> <br/>
+                                    <h4>Item without Quantity</h4>
+                                    <br/> <br/>
+                                    <MDBTable bordered>
+                                        <MDBTableHead>
+                                            <tr className="bg-dark text-light">
+                                                <th>Item Id</th>
+                                                <th>Item Name</th>
+                                                <th>Unite Price</th>
+                                                <th>Item Quantity</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                                    {this.state.withoutQtyItem.map((res,index) => (
+                                                            <tr>
+                                                                <td>{res._id}</td>
+                                                                <td>{res.itemName}</td>
+                                                                <td>{res.unitPrice}</td>
+                                                                <td>{res.quantity}</td>
+                                                                
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    )}
+
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                </div>
+                            </>
+                        </MDBCardBody>
+                    </MDBCard>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
+    </React.Fragment>;
+
+
+
 
         var _getSupervisorBoard = () =>
         <React.Fragment>
