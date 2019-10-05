@@ -24,6 +24,16 @@ public class CommonConstants {
     /*---------------------Order management---------------------------------*/
     public static final long ORDER_LIMIT = 100000;
     /*----------------------------------------------------------------------*/
+    
+    
+    
+    /*---------------------item management---------------------------------*/
+    public static final int ADD_ITEM_REQUEST = 1001;
+    public static final int GET_ALL_ITEM = 1002;
+    public static final int GET_ITEM_BY_QTY = 1003;
+    public static final int GET_ITEM_BY_NON_QTY = 1004;
+    public static final int UPDATE_ITEM_REQUEST = 1005;
+    /*----------------------------------------------------------------------*/
 
     /*-------------------Mapping-----------------------*/
     public static final String MAPPING_ADD_ORDER = "/order/add";
