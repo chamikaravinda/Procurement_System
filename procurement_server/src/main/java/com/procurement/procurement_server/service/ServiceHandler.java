@@ -45,7 +45,7 @@ public class ServiceHandler {
 			setIsInitialized(true);
 		}
 
-		System.out.println("##########service handler  with Item");
+		
 		switch (Integer.parseInt(reqId)) {
 		case CommonConstants.GET_USER_REQUEST:
 			return getRequiredUser(obj);

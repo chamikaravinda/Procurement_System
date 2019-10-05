@@ -14,7 +14,9 @@ export default class DashboardPage extends Component {
             allOrders: [],
             param: "chamika@gmail.com",
             name: '',
-            email: ''
+            email: '',
+            withQtyItem:[],
+            withoutQtyItem:[]
         }
     }
 
@@ -68,7 +70,21 @@ export default class DashboardPage extends Component {
             })
             .catch(err => {
                 console.log(err);
+            });
+
+            axios.get('http://localhost:5001/api/construction/data?RT=1004')
+            .then(res => {
+                console.log("item without quantity" + res.data);
+                this.setState({
+                    withoutQtyItem: res.data,
+
+                })
             })
+            .catch(err => {
+                console.log(err);
+            })
+
+            
     }
 
     
@@ -156,7 +172,7 @@ export default class DashboardPage extends Component {
                                                                     res.items.map((result, index) => (
                                                                         <tr>
                                                                             <td>{result._id}</td>
-                                                                            < td> {result.itemName}</td>
+                                                                            <td>{result.itemName}</td>
                                                                         </tr>
                                                                     ))
                                                                 }</td>
@@ -205,18 +221,88 @@ export default class DashboardPage extends Component {
                                             </tr>
                                         </MDBTableHead>
                                         <MDBTableBody>
-                                                    {this.state.withQtyItem.map((res, index) => (
+                                                    {this.state.withQtyItem.map((res,index) => (
                                                             <tr>
                                                                 <td>{res._id}</td>
                                                                 <td>{res.itemName}</td>
-                                                                <td>{res.quantity}</td>
                                                                 <td>{res.unitPrice}</td>
+                                                                <td>{res.quantity}</td>
                                                                 
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                         )
                                                     )}
 
-                                                </MDBTableBody>
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                </div>
+                            </>
+                        </MDBCardBody>
+                    </MDBCard>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
+
+        <br/> <br/>
+
+        <MDBContainer className="text-center">
+             <MDBRow md="12">
+                <MDBCol md="12">
+                    <MDBCard>
+                        <MDBCardBody>
+                            <>
+                                <div className="container border-bottom">
+                                    <br/> <br/>
+                                    <h4>Item without Quantity</h4>
+                                    <br/> <br/>
+                                    <MDBTable bordered>
+                                        <MDBTableHead>
+                                            <tr className="bg-dark text-light">
+                                                <th>Item Id</th>
+                                                <th>Item Name</th>
+                                                <th>Unite Price</th>
+                                                <th>Item Quantity</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                                    {this.state.withoutQtyItem.map((res,index) => (
+                                                            <tr>
+                                                                <td>{res._id}</td>
+                                                                <td>{res.itemName}</td>
+                                                                <td>{res.unitPrice}</td>
+                                                                <td>{res.quantity}</td>
+                                                                
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    )}
+
+                                        </MDBTableBody>
                                     </MDBTable>
                                 </div>
                             </>
