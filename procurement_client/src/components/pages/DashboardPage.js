@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+    import React, {Component, Fragment} from 'react';
 import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBRow, MDBIcon} from "mdbreact";
 import axios from "axios";
 import {MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
@@ -316,6 +316,20 @@ export default class DashboardPage extends Component {
 
 
 
+        var _getSupervisorBoard = () =>
+        <React.Fragment>
+                <MDBContainer className="text-center">
+                    <MDBRow md="12">
+                        <MDBCol md="12">
+                            <MDBCard>
+                                <MDBCardBody>
+                                    <Link to="/add-site" ><MDBBtn className="float-left" color="primary" size="sm">Add Site</MDBBtn></Link>
+                                </MDBCardBody>
+                            </MDBCard>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
+        </React.Fragment>;                                                                    
 
         console.log(localStorage.getItem('userType'));
         if (localStorage.getItem('userType') === "Site Manager") {
@@ -324,6 +338,8 @@ export default class DashboardPage extends Component {
             return (<_getSiteProcurementManagerBoard/>)
         } else if (localStorage.getItem('userType') === "Finance") {
             return (<_getFinancialEmployeeBoard/>)
+        } else if (localStorage.getItem('userType') === "Supervisor") {
+            return (<_getSupervisorBoard/>)
         }
     }
 }
