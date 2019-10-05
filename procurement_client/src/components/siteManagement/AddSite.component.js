@@ -18,15 +18,26 @@ export  class AddSite extends Component {
     }
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeSiteName =this.onChangeSiteName.bind(this);
+    this.onChangeSiteAddress =  this.onChangeSiteAddress.bind(this);
+    this.onChangeSiteManager = this.onChangeSiteManager.bind(this);
+    this.onChangeEmpCount = this.onChangeEmpCount.bind(this);
+
   }
 
-
-  OnChange = event => {
+   onChangeSiteName(event){
     this.setState({ siteName: event.target.value });
+   }
+   onChangeSiteAddress(event){
     this.setState({ siteAddress: event.target.value });
+   }
+   onChangeEmpCount(event){
     this.setState({ employeeCount: event.target.value});
+   }
+   onChangeSiteManager(event){
+    console.log("onchange value"+event.target.value)
     this.setState({ siteManager: event.target.value});
-  }
+   }
 
   onSubmit(e){
     e.preventDefault();
@@ -40,7 +51,8 @@ export  class AddSite extends Component {
 
     };
 
- 
+        console.log(this.state.siteManager);
+
         axios.post('http://localhost:5001/api/construction/site/add',newSite)
         .then((response) => {
           console.log(response);
@@ -77,7 +89,8 @@ render(){
               type="text"
               id="siteName"
               className="form-control"
-              name="siteName" onChange={this.OnChange}
+              value={this.state.siteName}
+              name="siteName" onChange={this.onChangeSiteName}
               required
             />
             <br />
@@ -88,7 +101,8 @@ render(){
               type="text"
               id="siteAddress"
               className="form-control"
-              name="siteAddress" onChange={this.OnChange}
+              value={this.state.siteAddress}
+              name="siteAddress" onChange={this.onChangeSiteAddress}
               required
             />
             <br />
@@ -99,7 +113,8 @@ render(){
               type="text"
               id="employeeCount"
               className="form-control"
-              name="employeeCount" onChange={this.OnChange}
+              value={this.state.employeeCount}
+              name="employeeCount" onChange={this.onChangeEmpCount}
               required
             />
             <br />
@@ -109,10 +124,11 @@ render(){
             <select
               id="siteManager"
               className="form-control"
-              name="siteManager" onChange={this.OnChange}
+              value={this.state.siteManager}
+              name="siteManager" onChange={this.onChangeSiteManager}
               required
             >
-                 <option disabled>--Select Site Manager--</option>
+                 <option disabled selected>--Select Site Manager--</option>
                 {this.state.allManagers.map((res, index) => (
                     <option value={res.staffId}>{res.firstName}</option>
                   )

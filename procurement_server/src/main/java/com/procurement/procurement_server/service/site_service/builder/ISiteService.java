@@ -6,4 +6,5 @@ import com.procurement.procurement_server.model.site_level.Site;
 
 public interface ISiteService {
 	public ResponseEntity addSite(Site site);
+	public ResponseEntity getAllSites();
 }

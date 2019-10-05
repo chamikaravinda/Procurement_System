@@ -16,7 +16,8 @@ export default class DashboardPage extends Component {
             name: '',
             email: '',
             withQtyItem:[],
-            withoutQtyItem:[]
+            withoutQtyItem:[],
+            sites:[]
         }
     }
 
@@ -60,7 +61,7 @@ export default class DashboardPage extends Component {
                 console.log(err);
             });
 
-            axios.get('http://localhost:5001/api/construction/data?RT=1003')
+        axios.get('http://localhost:5001/api/construction/data?RT=1003')
             .then(res => {
                 console.log("item with quantity" + res.data);
                 this.setState({
@@ -72,7 +73,7 @@ export default class DashboardPage extends Component {
                 console.log(err);
             });
 
-            axios.get('http://localhost:5001/api/construction/data?RT=1004')
+        axios.get('http://localhost:5001/api/construction/data?RT=1004')
             .then(res => {
                 console.log("item without quantity" + res.data);
                 this.setState({
@@ -84,7 +85,18 @@ export default class DashboardPage extends Component {
                 console.log(err);
             })
 
-            
+        if (localStorage.getItem('userType') === "Supervisor") {
+            axios.get('http://localhost:5001/api/construction/data?RT=72')
+            .then(res => {
+                this.setState({
+                    sites: res.data,
+
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
     }
 
     
@@ -320,6 +332,44 @@ export default class DashboardPage extends Component {
                             <MDBCard>
                                 <MDBCardBody>
                                     <Link to="/add-site" ><MDBBtn className="float-left" color="primary" size="sm">Add Site</MDBBtn></Link>
+
+                                    <MDBTable bordered>
+                                        <MDBTableHead>
+                                            <tr className="bg-dark text-light">
+                                                <th>Site Name</th>
+                                                <th>Address</th>
+                                                <th>Employees</th>
+                                                <th>Manager</th>
+                                                <th></th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                                    {this.state.sites.map((res,index) => (
+                                                            <tr>
+                                                                <td>{res.siteName}</td>
+                                                                <td>{res.siteAddress}</td>
+                                                                <td>{res.employeeCount}</td>
+                                                                <td>{res.siteManagerld}</td>
+                                                                                                      
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    )}
+
+                                        </MDBTableBody>
+                                    </MDBTable>
                                 </MDBCardBody>
                             </MDBCard>
                         </MDBCol>
