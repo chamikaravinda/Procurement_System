@@ -16,6 +16,9 @@ public class CommonConstants {
     public static final int DELETE_ORDER_REQUEST = 84;
    
 
+    public static final int ADD_SITE_REQUEST = 70;
+    public static final int GET_STAFF_BY_TYPE =71; 
+    
     public static final String USER_TYPE_PROCUREMENT_MANAGER = "Procurement Manager";
     public static final String USER_TYPE_SITE_MANAGER = "Site Manager";
     public static final String USER_TYPE_SUPERVISOR = "Supervisor";
@@ -23,6 +26,16 @@ public class CommonConstants {
 
     /*---------------------Order management---------------------------------*/
     public static final long ORDER_LIMIT = 100000;
+    /*----------------------------------------------------------------------*/
+    
+    
+    
+    /*---------------------item management---------------------------------*/
+    public static final int ADD_ITEM_REQUEST = 1001;
+    public static final int GET_ALL_ITEM = 1002;
+    public static final int GET_ITEM_BY_QTY = 1003;
+    public static final int GET_ITEM_BY_NON_QTY = 1004;
+    public static final int UPDATE_ITEM_REQUEST = 1005;
     /*----------------------------------------------------------------------*/
 
     /*-------------------Mapping-----------------------*/

@@ -3,6 +3,7 @@ package com.procurement.procurement_server.controller;
 import com.procurement.procurement_server.dao.ItemRepo;
 import com.procurement.procurement_server.dao.OrderRepo;
 import com.procurement.procurement_server.model.order_level.Order;
+import com.procurement.procurement_server.model.site_level.Site;
 import com.procurement.procurement_server.model.supplier_level.Item;
 import com.procurement.procurement_server.model.user_level.User;
 import com.procurement.procurement_server.model.user_level.UserAdaptor;
@@ -44,10 +45,16 @@ public class MainController {
         return serviceHandler.handleServiceRequest("26", usedAdaptor,"");
     }
 
+    /*--add site method--*/
+    @PostMapping("site/add")
+    public ResponseEntity addSite(@RequestBody Site site) {
+        return serviceHandler.handleServiceRequest("70", site,"");
+    }
+    
+    
     @GetMapping("/data")
-    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,
-                                  @RequestParam(value = "Uid", defaultValue = "") String uid) {
-        System.out.println(reqTyp);
+    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,@RequestParam(value = "Uid", defaultValue = "") String uid) {
+        System.out.println("Request type :"+reqTyp);
         return serviceHandler.handleServiceRequest(reqTyp, new Object(), uid);
     }
     
@@ -64,37 +71,18 @@ public class MainController {
 
 
    /*-----------test add and get item-----------------------------*/
-    @Autowired
-	ItemRepo itemRepo;
+   
     
-    @Autowired
-    OrderRepo orderRepo;
-    
-	@PostMapping(path="/item/add")
-	public Item addItem( @RequestBody Item item ) {
-		return itemRepo.save(item);
-	}
 	
-	@GetMapping( path = "/item/all")
-	public List<Item> getAllItems(){
-		return itemRepo.findAll();
-	}
-	
-	@GetMapping( path = "/order/all")
-	public List<Order> getAllOrders(){
-		return orderRepo.findAll();
-	}
+    @PostMapping("item/addItem")
+    public ResponseEntity addNewItem(@RequestBody Object obj) {
     	
-    /*-----------------------------------------------------------------*/
-    
-    /* Kalana Elapatha */
-
-//    @GetMapping("/addSupplier")
-//    public ResponseEntity addSupplier(
-//            @RequestParam(value = "SP") String reqTyp) {
-////        return serviceHandler.handleServiceRequest(reqTyp);
-//    }
-//
-    /* Kalana Elapatha  not completed yet*/
-
+        System.out.println(obj);
+        return serviceHandler.handleServiceRequest("1001", obj,"");
+    }
+	
+	
+	
+	
+ 
 }

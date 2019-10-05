@@ -42,6 +42,7 @@ public class UserService {
                     userAdaptor.setFirstName(stf.get().getFirstName());
                     userAdaptor.setLastName(stf.get().getLastName());
                     userAdaptor.setType(stf.get().getType());
+                    userAdaptor.setId(stf.get().getStaffId());
                     return new ResponseEntity<>(userAdaptor, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Invalid Password", HttpStatus.OK);

@@ -1,22 +1,29 @@
 package com.procurement.procurement_server.service;
 
-
 import com.procurement.procurement_server.model.order_level.Order;
 import com.procurement.procurement_server.model.order_level.Requistion;
+import com.procurement.procurement_server.model.site_level.Site;
+import com.procurement.procurement_server.model.supplier_level.Item;
 import com.procurement.procurement_server.model.user_level.User;
+import com.procurement.procurement_server.service.Item_service.ItemService;
 import com.procurement.procurement_server.service.order_service.*;
 import com.procurement.procurement_server.service.order_service.builder.ApprovedOrder;
 import com.procurement.procurement_server.service.order_service.builder.OrderBroker;
 import com.procurement.procurement_server.service.order_service.builder.OrderBuilder;
 import com.procurement.procurement_server.service.order_service.builder.PendingOrder;
+import com.procurement.procurement_server.service.site_service.SiteServiceImpl;
+import com.procurement.procurement_server.service.user_service.StaffService;
 import com.procurement.procurement_server.service.user_service.UserService;
 import com.procurement.procurement_server.util.*;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ServiceHandler {
@@ -31,7 +38,15 @@ public class ServiceHandler {
 
     @Autowired
     OrderServiceImpl orderService;
+    
+    @Autowired
+    SiteServiceImpl siteService;
+    
+    @Autowired
+    StaffService staffService;
 
+  	@Autowired
+	  ItemService itemService;
     public ResponseEntity handleServiceRequest(String reqId, Object obj, String uid) {
         if (!isIsInitialized()) {
             startDataServer();
@@ -42,8 +57,6 @@ public class ServiceHandler {
                 return getRequiredUser(obj);
             case CommonConstants.ADD_USER_REQUEST:
                 return addNewUser(obj);
-            case CommonConstants.GET_AVAILABLE_SUPPLIER_ITEMS:
-                return getAvailableItemsList();
             case CommonConstants.GET_ALL_USERS:
                 return getAllUsers();
             case CommonConstants.DELETE_SPECIFIC_USER:
@@ -52,13 +65,25 @@ public class ServiceHandler {
             	return handleOrder((Order)obj);
             case CommonConstants.UPDATE_ORDER_REQUEST :
             	return handleOrder((Order) obj);
-                case CommonConstants.GET_ALL_ORDERS:
+            case CommonConstants.GET_ALL_ORDERS:
                     return getAllOrders();
+            case CommonConstants.ADD_SITE_REQUEST:
+                return addSite((Site) obj);
+            case CommonConstants.GET_STAFF_BY_TYPE :
+            	return getStaffMembersByType(uid);
+            case CommonConstants.GET_AVAILABLE_SUPPLIER_ITEMS:
+               return getAvailableItemsList();
+            case CommonConstants.ADD_ITEM_REQUEST:
+               return addNewItem((Item) obj);
+            case CommonConstants.GET_ITEM_BY_QTY:
+               return getItemWithQty();
+            case CommonConstants.GET_ITEM_BY_NON_QTY:
+               return getItemWithoutQty();
             default:
                 return new ResponseEntity("Failed", HttpStatus.OK);
         }
     }
-
+    
     private ResponseEntity getRequiredUser(Object obj) {
         return userService.getRequiredUser((User) obj);
     }
@@ -184,7 +209,6 @@ public class ServiceHandler {
     }
     private  ResponseEntity getItemWithoutQty() {
       return itemService.getItemWithoutQty();
-
     }
 
     private  ResponseEntity getItemWithQty() {
