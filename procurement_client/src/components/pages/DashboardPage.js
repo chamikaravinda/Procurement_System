@@ -221,10 +221,133 @@ export default class DashboardPage extends Component {
             </React.Fragment>;
 
         var _getFinancialEmployeeBoard = () =>
-            <React.Fragment>
-                <h6>Wlcome</h6>
-            </React.Fragment>;
+        <React.Fragment>
+        <MDBContainer className="text-center">
+             <MDBRow md="12">
+                <MDBCol md="12">
+                    <MDBCard>
+                        <MDBCardBody>
+                            <>
+                                <div className="container border-bottom">
+                                    <br/> <br/>
+                                    <h4>Item with Quantity</h4>
+                                    <br/> <br/>
+                                    <MDBTable bordered>
+                                        <MDBTableHead>
+                                            <tr className="bg-dark text-light">
+                                                <th>Item Id</th>
+                                                <th>Item Name</th>
+                                                <th>Unite Price</th>
+                                                <th>Item Quantity</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                                    {this.state.withQtyItem.map((res,index) => (
+                                                            <tr>
+                                                                <td>{res._id}</td>
+                                                                <td>{res.itemName}</td>
+                                                                <td>{res.unitPrice}</td>
+                                                                <td>{res.quantity}</td>
+                                                                
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    )}
 
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                </div>
+                            </>
+                        </MDBCardBody>
+                    </MDBCard>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
+
+        <br/> <br/>
+        <MDBContainer className="text-center">
+             <MDBRow md="12">
+                <MDBCol md="12">
+                    <MDBCard>
+                        <MDBCardBody>
+                            <>
+                                <div className="container border-bottom">
+                                    <br/> <br/>
+                                    <h4>Item without Quantity</h4>
+                                    <br/> <br/>
+                                    <MDBTable bordered>
+                                        <MDBTableHead>
+                                            <tr className="bg-dark text-light">
+                                                <th>Item Id</th>
+                                                <th>Item Name</th>
+                                                <th>Unite Price</th>
+                                                <th>Item Quantity</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                                    {this.state.withoutQtyItem.map((res,index) => (
+                                                            <tr>
+                                                                <td>{res._id}</td>
+                                                                <td>{res.itemName}</td>
+                                                                <td>{res.unitPrice}</td>
+                                                                <td>{res.quantity}</td>
+                                                                
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    )}
+
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                </div>
+                            </>
+                        </MDBCardBody>
+                    </MDBCard>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
+    </React.Fragment>;
+
+        var _getSupervisorBoard = () =>
+        <React.Fragment>
+                <MDBContainer className="text-center">
+                    <MDBRow md="12">
+                        <MDBCol md="12">
+                            <MDBCard>
+                                <MDBCardBody>
+                                    <Link to="/add-site" ><MDBBtn className="float-left" color="primary" size="sm">Add Site</MDBBtn></Link>
+                                </MDBCardBody>
+                            </MDBCard>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
+        </React.Fragment>;                                                                    
 
         console.log(localStorage.getItem('userType'));
         if (localStorage.getItem('userType') === "Site Manager") {

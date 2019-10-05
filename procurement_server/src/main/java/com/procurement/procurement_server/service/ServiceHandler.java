@@ -167,5 +167,32 @@ public class ServiceHandler {
     private ResponseEntity deleteSpecificUser(String uid) {
         return userService.deleteSpecificUser(uid);
     }
+    
+    private ResponseEntity addSite(Site site) {
+    	return siteService.addSite(site);
+    } 
+    
+    private ResponseEntity getAllOrders() {
+    	return null;
+    }
+    
+    /*----Item------------- */
+	
+    private ResponseEntity addNewItem(Item obj) {
+      return itemService.addNewItem(obj);
 
+    }
+    private  ResponseEntity getItemWithoutQty() {
+      return itemService.getItemWithoutQty();
+
+    }
+
+    private  ResponseEntity getItemWithQty() {
+      return itemService.getItemWithQty();
+
+    }
+    
+    private ResponseEntity getStaffMembersByType(String type) {
+    	return staffService.getStaffMembersByType(type);
+    }
 }
