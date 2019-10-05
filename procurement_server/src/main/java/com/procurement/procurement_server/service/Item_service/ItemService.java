@@ -1,5 +1,6 @@
 package com.procurement.procurement_server.service.Item_service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,39 +23,44 @@ public class ItemService {
 		return new ResponseEntity<Object>(item, HttpStatus.OK);
 	}
 
-	//Avalible Quntity item------------
-	public ResponseEntity getItemByQty() {
+	// Not Available Quantity item------------
+	public  ResponseEntity getItemWithoutQty() {
 
-		List<Item> item = itemRepo.findAll();
+		List<Item> allItemList = itemRepo.findAll();
+		List<Item> tempItemList = new ArrayList<Item>();
 
-		for (Item avlQty : item) {
+		for (Item item : allItemList) {
 
-			if (avlQty.getQuantity() == 0) {
+			if (item.getQuantity() == 0) {
 
-				return new ResponseEntity<Object>(item, HttpStatus.OK);
+				tempItemList.add(item);
 			}
 
 		}
-		return null;
+		
+		return new ResponseEntity<>(tempItemList, HttpStatus.OK);
 
 	}
-	
-	//Not Avalible Quntity item------------
-	
-	public ResponseEntity getItemByNoNQty() {
 
-		List<Item> item = itemRepo.findAll();
+	//  Available Quantity item------------
 
-		for (Item avlQty : item) {
+	public ResponseEntity getItemWithQty() {
 
-			if (avlQty.getQuantity() != 0) {
+		List<Item> allItemList = itemRepo.findAll();
+		List<Item> tempItemList = new ArrayList<Item>();
 
-				return new ResponseEntity<Object>(item, HttpStatus.OK);
+		for (Item item : allItemList) {
+
+			if (item.getQuantity() != 0) {
+
+				tempItemList.add(item);
 			}
 
 		}
-		return null;
+		
+		return new ResponseEntity<>(tempItemList, HttpStatus.OK);
 
 	}
+
 
 }

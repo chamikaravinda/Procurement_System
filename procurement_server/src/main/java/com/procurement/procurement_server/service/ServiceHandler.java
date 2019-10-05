@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ServiceHandler {
@@ -28,7 +29,7 @@ public class ServiceHandler {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	ItemService itemService;
 
@@ -43,17 +44,13 @@ public class ServiceHandler {
 			startDataServer();
 			setIsInitialized(true);
 		}
+
 		
-		System.out.println("##########service handler  with Item");
 		switch (Integer.parseInt(reqId)) {
 		case CommonConstants.GET_USER_REQUEST:
 			return getRequiredUser(obj);
 		case CommonConstants.ADD_USER_REQUEST:
 			return addNewUser(obj);
-/*-----Item ------*/
-		case CommonConstants.ADD_ITEM_REQUEST:
-			return addNewItem((Item) obj);
-//---Item
 		case CommonConstants.GET_ALL_USERS:
 			return getAllUsers();
 		case CommonConstants.DELETE_SPECIFIC_USER:
@@ -62,17 +59,18 @@ public class ServiceHandler {
 			return handleOrder((Order) obj);
 		case CommonConstants.UPDATE_ORDER_REQUEST:
 			return handleOrder((Order) obj);
-//                case CommonConstants.GET_ALL_ORDERS:
-//                    return getAllOrders();
+		case CommonConstants.ADD_ITEM_REQUEST:
+			return addNewItem((Item) obj);
+		case CommonConstants.GET_ITEM_BY_QTY:
+			return getItemWithQty();
+		case CommonConstants.GET_ITEM_BY_NON_QTY:
+			return getItemWithoutQty();
 		default:
 			return new ResponseEntity("Failed", HttpStatus.OK);
 		}
 	}
 
-	private ResponseEntity addNewItem(Item obj) {
-		return itemService.addNewItem(obj);
-		
-	}
+	
 
 	private ResponseEntity getRequiredUser(Object obj) {
 		return userService.getRequiredUser((User) obj);
@@ -138,6 +136,22 @@ public class ServiceHandler {
 
 	private ResponseEntity deleteSpecificUser(String uid) {
 		return userService.deleteSpecificUser(uid);
+	}
+	
+	/*----Item------------- */
+	
+	private ResponseEntity addNewItem(Item obj) {
+		return itemService.addNewItem(obj);
+
+	}
+	private  ResponseEntity getItemWithoutQty() {
+		return itemService.getItemWithoutQty();
+
+	}
+	
+	private  ResponseEntity getItemWithQty() {
+		return itemService.getItemWithQty();
+
 	}
 
 }
