@@ -9,6 +9,8 @@ import Main from '../pages/MainPage';
 import AddItem from '../supplierManagement/addItem';
 import UpdateItem from '../supplierManagement/updateItem';
 import AddSite from '../siteManagement/AddSite.component';
+import EditSite from '../siteManagement/EditSite.component';
+
 
 
 class Routes extends React.Component {
@@ -22,7 +24,7 @@ class Routes extends React.Component {
                 <Route path='/addItem' component={AddItem}/>
                 <Route path='/updateItem' component={UpdateItem}/>
                 <Route path='/add-site' component={AddSite}/>
-
+                <Route path="/edit-site/:id" component={EditSite} />
             </Switch>
         );
     }

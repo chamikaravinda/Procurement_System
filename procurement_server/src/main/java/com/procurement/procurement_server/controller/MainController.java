@@ -48,9 +48,13 @@ public class MainController {
     /*--add site method--*/
     @PostMapping("site/add")
     public ResponseEntity addSite(@RequestBody Site site) {
-        return serviceHandler.handleServiceRequest("70", site,"");
+        return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.ADD_SITE_REQUEST), site,"");
     }
     
+    @PostMapping("site/update")
+    public ResponseEntity updateSite(@RequestBody Site site) {
+        return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.UPDATE_SITE_REQUEST), site,"");
+    }
     
     @GetMapping("/data")
     public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,@RequestParam(value = "Uid", defaultValue = "") String uid) {

@@ -29,6 +29,9 @@ public class CommonConstants {
     public static final int GET_ALL_SITE_REQUEST = 72;
     public static final int DELETE_SITE_BY_ID = 73;
     public static final int GET_SITE_BY_ADDED_USER_REQUEST=74;
+    public static final int UPDATE_SITE_REQUEST = 75;
+    public static final int GET_SITE_BY_ID_REQUEST = 76;
+
     
     public static final String USER_TYPE_PROCUREMENT_MANAGER = "Procurement Manager";
     public static final String USER_TYPE_SITE_MANAGER = "Site Manager";
