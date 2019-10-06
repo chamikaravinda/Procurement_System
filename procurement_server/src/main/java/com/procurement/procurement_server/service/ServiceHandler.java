@@ -1,5 +1,6 @@
 package com.procurement.procurement_server.service;
 
+
 import com.procurement.procurement_server.model.order_level.Order;
 import com.procurement.procurement_server.model.order_level.Requistion;
 import com.procurement.procurement_server.model.site_level.Site;
@@ -15,7 +16,6 @@ import com.procurement.procurement_server.service.site_service.SiteServiceImpl;
 import com.procurement.procurement_server.service.user_service.StaffService;
 import com.procurement.procurement_server.service.user_service.UserService;
 import com.procurement.procurement_server.util.*;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,23 +30,23 @@ public class ServiceHandler {
 
     private static boolean isInitialized = false;
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
     @Autowired
     DataServer dataServer;
 
     @Autowired
     OrderServiceImpl orderService;
-    
+
     @Autowired
     SiteServiceImpl siteService;
-    
+
     @Autowired
     StaffService staffService;
 
   	@Autowired
-	  ItemService itemService;
+    ItemService itemService;
     public ResponseEntity handleServiceRequest(String reqId, Object obj, String uid) {
         if (!isIsInitialized()) {
             startDataServer();
@@ -71,27 +71,21 @@ public class ServiceHandler {
                 return addSite((Site) obj);
             case CommonConstants.GET_ALL_SITE_REQUEST:
                 return getAllSites();
-            case CommonConstants.DELETE_SITE_BY_ID:
-            	return deletSiteByID(uid);
-            case CommonConstants.GET_SITE_BY_ADDED_USER_REQUEST:
-                return getSitesByAddedUser(uid);
             case CommonConstants.GET_STAFF_BY_TYPE :
             	return getStaffMembersByType(uid);
             case CommonConstants.GET_AVAILABLE_SUPPLIER_ITEMS:
-               return getAvailableItemsList();
+               return getItemWithQty();
             case CommonConstants.ADD_ITEM_REQUEST:
                return addNewItem((Item) obj);
             case CommonConstants.GET_ITEM_BY_QTY:
                return getItemWithQty();
             case CommonConstants.GET_ITEM_BY_NON_QTY:
                return getItemWithoutQty();
-            case CommonConstants.DELETE_ITEM_REQUEST:
-              return deleteSpecificItem(uid);
             default:
                 return new ResponseEntity("Failed", HttpStatus.OK);
         }
     }
-    
+
     private ResponseEntity getRequiredUser(Object obj) {
         return userService.getRequiredUser((User) obj);
     }
@@ -162,9 +156,16 @@ public class ServiceHandler {
 
 
     }
-    
+
+    private ResponseEntity addNewItem(Item obj) {
+		return itemService.addNewItem(obj);
+
+	}
+
+
 
 	public ResponseEntity<Object> getAllOrders(){
+		
 		return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
 		
 	}
@@ -184,10 +185,6 @@ public class ServiceHandler {
 		return new ResponseEntity<>(orderService.declineOrder(order) , HttpStatus.OK);
 	}
 
-
-
-
-
 	private ResponseEntity deleteSpecificUser(String uid) {
 		return userService.deleteSpecificUser(uid);
 	}
@@ -196,28 +193,17 @@ public class ServiceHandler {
         return userService.getAllUsers();
     }
 
-    /*---------Site---------------*/
+
+
     private ResponseEntity addSite(Site site) {
     	return siteService.addSite(site);
-    } 
-    
+    }
+
     private ResponseEntity getAllSites() {
     	return siteService.getAllSites();
     }
-    
-    private ResponseEntity deletSiteByID(String id) {
-    	return siteService.deleteSiteByID(id);
-    }
 
-    private ResponseEntity getSitesByAddedUser(String id) {
-    	return siteService.getAllSitesByAddedUser(id);
-    }
-    /*---------Item------------- */
 
-    private ResponseEntity addNewItem(Item obj) {
-      return itemService.addNewItem(obj);
-
-    }
     private  ResponseEntity getItemWithoutQty() {
       return itemService.getItemWithoutQty();
     }
@@ -226,9 +212,7 @@ public class ServiceHandler {
       return itemService.getItemWithQty();
 
     }
-    private ResponseEntity deleteSpecificItem(String uid) {
-		return itemService.deleteSpecifiItem(uid);
-	  }
+
     private ResponseEntity getStaffMembersByType(String type) {
     	return staffService.getStaffMembersByType(type);
     }

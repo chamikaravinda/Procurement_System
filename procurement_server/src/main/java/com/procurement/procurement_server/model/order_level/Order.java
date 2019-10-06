@@ -56,6 +56,10 @@ public class Order {
 		this.payment = payment;
 	}
 
+    public Order() {
+
+    }
+
 	public String get_id() {
 		return _id.toHexString();
 	}

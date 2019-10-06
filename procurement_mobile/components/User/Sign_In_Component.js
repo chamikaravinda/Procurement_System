@@ -16,6 +16,7 @@ import {
     Alert,
     KeyboardAvoidingView
 } from 'react-native'
+import {AsyncStorage} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 import axios from 'axios';
 import {
@@ -72,23 +73,26 @@ export default class Login extends Component {
                 email: email,
                 password: password
             };
-            axios.post('http://192.168.16.95:5001/api/construction/user/get', User)
+            axios.post('http://192.168.8.101:5001/api/construction/user/get', User)
                 .then(res => {
                     let resData = res;
-                    // if (res.data === "No User Found") {
-                    //     this.setState({loading: false});
-                    //     this.setState({show1: true});
-                    // } else if (res.data === "Invalid Password") {
-                    //     this.setState({loading: false});
-                    //     this.setState({show1: true});
-                    //
-                    // } else {
-                    //     this.setState({loading: false});
-                    //     this.props.navigation.navigate('Second')
-                    //
-                    // }
-                    this.props.navigation.navigate('Second');
+                    if (res.data === "No User Found") {
+                        this.setState({loading: false});
+                        this.setState({show1: true});
+                    } else if (res.data === "Invalid Password") {
+                        this.setState({loading: false});
+                        this.setState({show1: true});
 
+                    } else {
+                        this.setState({loading: false});
+                        this.props.navigation.navigate('Second');
+                        AsyncStorage.multiSet([
+                            ['name', res.data.firstName],
+                            ['userType', res.data.type],
+                            ['id', res.data.id]
+                        ]);
+
+                    }
                     this.setState({loading: false});
 
                 });
@@ -140,6 +144,7 @@ export default class Login extends Component {
                                    autoCapitalize="none"
                                    onChangeText={this.handlePassword}
                                    clearButtonMode='always'
+                                   secureTextEntry={true}
                         />
 
                     </View>

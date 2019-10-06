@@ -30,7 +30,8 @@ export default class Store extends React.Component {
             commonQty: '',
             Qtyvalue: '',
             orderItemsList: [],
-            visibleOrderSummery: false
+            visibleOrderSummery: false,
+            userID: '5d9940f0f5e79c12700b275d',
         };
     }
 
@@ -72,17 +73,19 @@ export default class Store extends React.Component {
 
     _sendOrderRequest() {
         this.setState({loading: true});
-        let empId;
+        console.log(this.state.orderItemsList+"Came here to the send request");
+        let empId1;
         AsyncStorage.multiGet(['id']).then((data) => {
-            empId = data[0][1];
-            console.log(empId);
+            this.setState({userID : data[0][1] });
+            console.log(data[0][1]);
         });
-        let Order = {
-            orderList: this.state.orderItemsList,
-            id : empId
+        var OrderRequestMapper = {
+            orderList1: this.state.orderItemsList,
+            empId1 : this.state.userID,
         };
 
-        axios.post('http://192.168.8.101:5001/api/construction/order/add', Order)
+        console.log(OrderRequestMapper.orderList1+""+OrderRequestMapper.empId1+"Sent order");
+        axios.post('http://192.168.8.101:5001/api/construction/order/add', OrderRequestMapper)
             .then(res => {
                 let resData = res;
             }).catch(err => {
@@ -99,6 +102,7 @@ export default class Store extends React.Component {
         tempOrderList.push([itemName, qty]);
         console.log(tempOrderList);
         this.setState({orderItemsList: tempOrderList});
+        console.log("Order Items  List :" + this.state.orderItemsList);
         this.setState({commonQty: '0'});
         var selectedList = this.state.selectedArray;
         selectedList = selectedList.filter(item => item[0] !== itemName);
@@ -149,6 +153,7 @@ export default class Store extends React.Component {
             this.setState({disableShopBtn: false});
             data.item.selectedClass = styles.selected;
             var selectedList = this.state.selectedArray;
+            console.log(data.item);
             selectedList.push([data.item.itemName, this.qtyInputField(), this.getCommonSubmitButton(data.item.itemName)]);
             this.setState({selectedArray: selectedList});
         } else {
@@ -330,7 +335,7 @@ const tableStyles = StyleSheet.create({
     head: {paddingLeft: 10, height: 40, backgroundColor: '#61e32d'},
     text: {margin: 6},
     row: {flexDirection: 'row', height: 40, margin: 2},
-    btn: {width: 48, height: 20, backgroundColor: '#78B7BB', borderRadius: 2, margin: 2},
+    btn: {width: 55, height: 20, backgroundColor: '#78B7BB', borderRadius: 2, margin: 2},
     btnText: {textAlign: 'center', color: '#fff'}
 });
 

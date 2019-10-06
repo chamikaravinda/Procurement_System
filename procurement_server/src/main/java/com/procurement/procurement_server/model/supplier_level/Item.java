@@ -1,11 +1,12 @@
 package com.procurement.procurement_server.model.supplier_level;
 
+import com.procurement.procurement_server.datastore.DatabaseEvent;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "item")
-public class Item {
+public class Item implements DatabaseEvent {
 
 	@Id
 	private ObjectId _id;
@@ -56,5 +57,14 @@ public class Item {
 				+ "]";
 	}
 
-	
+
+    @Override
+    public String getAllData() {
+        return null;
+    }
+
+    @Override
+    public void setDataStore() {
+
+    }
 }

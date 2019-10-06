@@ -1,6 +1,8 @@
 package com.procurement.procurement_server.service;
 
 
+import com.procurement.procurement_server.dao.ItemRepo;
+import com.procurement.procurement_server.datastore.ItemDataStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class DataServer {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    ItemRepo itemRepo;
+
     public User getUser(String key) {
         return UserDatastore.getSharedInstance().getUserFromStore(key);
     }
@@ -26,8 +31,10 @@ public class DataServer {
     public void startDataServer() {
         try {
             UserDatastore.getSharedInstance().setDataStore(userRepo.findAll());
+            ItemDataStore.getSharedInstance().setDataStore(itemRepo.findAll());
         }catch (Exception e) {
             UserDatastore.getSharedInstance().setDataStore(userRepo.findAll());
+            ItemDataStore.getSharedInstance().setDataStore(itemRepo.findAll());
         }
     }
 }

@@ -23,20 +23,13 @@ export default class Dashboard extends Component {
 
 const TopTabNavigator = createMaterialTopTabNavigator(
     {
-        Home: {
-            screen: HomeScreen,
-            navigationOptions: {
-                tabBarLabel: 'Home',
-                tabBarIcon: ({tintColor}) => (<Icon name="ios-home" color={tintColor} size={18}/>)
-            }
-        },
-        Settings: {
-            screen: SettingsScreen,
-            navigationOptions: {
-                tabBarLabel: 'Profile',
-                tabBarIcon: ({tintColor}) => (<Icon name="ios-person" color={tintColor} size={18}/>)
-            }
-        },
+        // Settings: {
+        //     screen: SettingsScreen,
+        //     navigationOptions: {
+        //         tabBarLabel: 'Profile',
+        //         tabBarIcon: ({tintColor}) => (<Icon name="ios-person" color={tintColor} size={18}/>)
+        //     }
+        // },
         Profile: {
             screen: OrderWindow,
             navigationOptions: {
@@ -44,17 +37,17 @@ const TopTabNavigator = createMaterialTopTabNavigator(
                 tabBarIcon: ({tintColor}) => (<Icon name="md-add-circle" color={tintColor} size={18}/>)
             }
         },
-        Order: {
-            screen: HomeScreen,
-            navigationOptions: {
-                tabBarLabel: 'My Orders',
-                tabBarIcon: ({tintColor}) => (<Icon name="ios-book" color={tintColor} size={18}/>)
-            }
-        },
+        // Order: {
+        //     screen: HomeScreen,
+        //     navigationOptions: {
+        //         tabBarLabel: 'My Orders',
+        //         tabBarIcon: ({tintColor}) => (<Icon name="ios-book" color={tintColor} size={18}/>)
+        //     }
+        // },
 
     }
     , {
-        initialRouteName: 'Settings',
+        initialRouteName: 'Profile',
         tabBarPosition: 'bottom',
         tabBarOptions: {
             showLabel: false,
