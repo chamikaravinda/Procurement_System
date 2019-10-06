@@ -3,6 +3,7 @@ package com.procurement.procurement_server.controller;
 import com.procurement.procurement_server.dao.ItemRepo;
 import com.procurement.procurement_server.dao.OrderRepo;
 import com.procurement.procurement_server.model.order_level.Order;
+import com.procurement.procurement_server.model.site_level.Site;
 import com.procurement.procurement_server.model.supplier_level.Item;
 import com.procurement.procurement_server.model.user_level.User;
 import com.procurement.procurement_server.model.user_level.UserAdaptor;
@@ -44,10 +45,16 @@ public class MainController {
         return serviceHandler.handleServiceRequest("26", usedAdaptor,"");
     }
 
+    /*--add site method--*/
+    @PostMapping("site/add")
+    public ResponseEntity addSite(@RequestBody Site site) {
+        return serviceHandler.handleServiceRequest("70", site,"");
+    }
+    
+    
     @GetMapping("/data")
-    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,
-                                  @RequestParam(value = "Uid", defaultValue = "") String uid) {
-        System.out.println(reqTyp);
+    public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,@RequestParam(value = "Uid", defaultValue = "") String uid) {
+        System.out.println("Request type :"+reqTyp);
         return serviceHandler.handleServiceRequest(reqTyp, new Object(), uid);
     }
     
@@ -85,7 +92,7 @@ public class MainController {
 	
     @PostMapping("item/addItem")
     public ResponseEntity addNewItem(@RequestBody Object obj) {
-    	System.out.println("@@@@@@@@@@@@@@@@ Main Controoller with Item");
+    	
         System.out.println(obj);
         return serviceHandler.handleServiceRequest("1001", obj,"");
     }
@@ -93,17 +100,5 @@ public class MainController {
 	
 	
 	
-    	
-    /*-----------------------------------------------------------------*/
-    
-    /* Kalana Elapatha */
-
-//    @GetMapping("/addSupplier")
-//    public ResponseEntity addSupplier(
-//            @RequestParam(value = "SP") String reqTyp) {
-////        return serviceHandler.handleServiceRequest(reqTyp);
-//    }
-//
-    /* Kalana Elapatha  not completed yet*/
-
+ 
 }
