@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9b6ab871-9995-4d80-b90c-1a62ec0a0204" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../procurement_mobile/components/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/../procurement_mobile/components/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../procurement_mobile/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/../procurement_mobile/components/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../procurement_mobile/components/User/Sign_In_Component.js" beforeDir="false" afterPath="$PROJECT_DIR$/../procurement_mobile/components/User/Sign_In_Component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../procurement_mobile/components/order/OrderWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/../procurement_mobile/components/order/OrderWindow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../procurement_server/src/main/java/com/procurement/procurement_server/service/ServiceHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../procurement_server/src/main/java/com/procurement/procurement_server/service/ServiceHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/includes/sideNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/includes/sideNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/DashboardPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/DashboardPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../procurement_server/src/main/java/com/procurement/procurement_server/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../procurement_server/src/main/java/com/procurement/procurement_server/controller/MainController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,8 +42,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/pages/DashboardPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3995">
-              <caret line="239" column="29" selection-start-line="239" selection-start-column="29" selection-end-line="239" selection-end-column="29" />
+            <state relative-caret-position="314">
+              <caret line="265" column="97" lean-forward="true" selection-start-line="265" selection-start-column="97" selection-end-line="265" selection-end-column="97" />
+              <folding>
+                <element signature="e#4#53#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/includes/sideNavigation.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="411">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -74,11 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/includes/Routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="428">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -106,12 +119,12 @@
         <option value="$PROJECT_DIR$/src/components/userManagment/register.component.js" />
         <option value="$PROJECT_DIR$/src/components/includes/MainRoutes.js" />
         <option value="$PROJECT_DIR$/src/components/pages/MainPage.js" />
-        <option value="$PROJECT_DIR$/src/components/includes/sideNavigation.js" />
         <option value="$PROJECT_DIR$/src/components/includes/Routes.js" />
         <option value="$PROJECT_DIR$/src/components/includes/topNavigation.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/components/pages/DashboardPage.js" />
         <option value="$PROJECT_DIR$/src/components/userManagment/login.component.js" />
+        <option value="$PROJECT_DIR$/src/components/pages/DashboardPage.js" />
+        <option value="$PROJECT_DIR$/src/components/includes/sideNavigation.js" />
       </list>
     </option>
   </component>
@@ -151,6 +164,13 @@
               <item name="procurement_client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="procurement_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="procurement_client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="includes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -224,7 +244,7 @@
       <workItem from="1570241063439" duration="4751000" />
       <workItem from="1570257665734" duration="593000" />
       <workItem from="1570324422451" duration="1320000" />
-      <workItem from="1570329532550" duration="1079000" />
+      <workItem from="1570329532550" duration="4380000" />
     </task>
     <task id="LOCAL-00001" summary="Dashboards created according to the user roles">
       <created>1569923720221</created>
@@ -244,12 +264,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52466000" />
+    <option name="totallyTimeSpent" value="55767000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19568452" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14583333" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -266,7 +287,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.6824877" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.20949264" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.049099836" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="bottom" id="Messages" order="13" />
@@ -288,17 +309,6 @@
     <MESSAGE value="Dashboards created according to the user roles" />
     <MESSAGE value="Changes in Procurement Manager Dashboard" />
     <option name="LAST_COMMIT_MESSAGE" value="Changes in Procurement Manager Dashboard" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/components/pages/DashboardPage.js</url>
-          <line>53</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/public/logo192.png">
@@ -368,16 +378,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/includes/sideNavigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="39" lean-forward="true" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/mdbreact/dist/types/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -392,13 +392,6 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/pages/DashboardPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3995">
-          <caret line="239" column="29" selection-start-line="239" selection-start-column="29" selection-end-line="239" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -422,6 +415,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/includes/Routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/includes/MainRoutes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -432,10 +435,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/includes/Routes.js">
+    <entry file="file://$PROJECT_DIR$/src/components/pages/DashboardPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="314">
+          <caret line="265" column="97" lean-forward="true" selection-start-line="265" selection-start-column="97" selection-end-line="265" selection-end-column="97" />
+          <folding>
+            <element signature="e#4#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/includes/sideNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

@@ -3,7 +3,6 @@ package com.procurement.procurement_server.controller;
 import com.procurement.procurement_server.dao.ItemRepo;
 import com.procurement.procurement_server.dao.OrderRepo;
 import com.procurement.procurement_server.model.order_level.Order;
-import com.procurement.procurement_server.model.order_request_mapper.OrderRequestMapper;
 import com.procurement.procurement_server.model.site_level.Site;
 import com.procurement.procurement_server.model.supplier_level.Item;
 import com.procurement.procurement_server.model.user_level.User;
@@ -51,20 +50,19 @@ public class MainController {
     public ResponseEntity addSite(@RequestBody Site site) {
         return serviceHandler.handleServiceRequest("70", site,"");
     }
-    
-    
+
+
     @GetMapping("/data")
     public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,@RequestParam(value = "Uid", defaultValue = "") String uid) {
         System.out.println("Request type :"+reqTyp);
         System.out.println("user id :"+ uid);
         return serviceHandler.handleServiceRequest(reqTyp, new Object(), uid);
     }
-    
+
     @PostMapping(CommonConstants.MAPPING_ADD_ORDER)
-    public ResponseEntity<Object> addOrder( @RequestBody OrderRequestMapper orderRequestMapper ){
-        System.out.println(orderRequestMapper);
-        Order order = orderRequestMapper.convertToOrder();
-        return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.ADD_ORDER_REQUEST), order, "");
+    public ResponseEntity<Object> addOrder( @RequestBody Order order ){
+
+    	return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.ADD_ORDER_REQUEST), order, "");
     }
     
     @PutMapping( CommonConstants.MAPPING_UPDATE_ORDER)

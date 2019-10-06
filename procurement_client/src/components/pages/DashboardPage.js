@@ -1,5 +1,5 @@
     import React, {Component, Fragment} from 'react';
-import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBRow, MDBIcon} from "mdbreact";
+import {MDBBtn,MDBView, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBRow, MDBIcon} from "mdbreact";
 import axios from "axios";
 import {MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
@@ -18,7 +18,7 @@ export default class DashboardPage extends Component {
             withQtyItem:[],
             withoutQtyItem:[],
             withQtyItemDelete:[],
-            withoutQtyItemDelete:[]
+            withoutQtyItemDelete:[],
             sites:[],
             siteType:"allSites"
 
@@ -32,7 +32,7 @@ export default class DashboardPage extends Component {
         this.setState({
             siteType:e.target.value
         })
-        this.getSiteDetails(localStorage.getItem("id"),e.target.value);
+        // this.getSiteDetails(localStorage.getItem("id"),e.target.value);
     }
 
     fileDelete(_id) {
@@ -163,7 +163,7 @@ componentDidMount() {
             })
         }else{
             console.log("My sites loaded");
-            axios.get('http://localhost:5001/api/construction/data?RT=74&Uid=' + id)
+            axios.get('http://localhost:5001/api/construction/data?RT=74&Uid=' + localStorage.getItem("id"))
             .then(res => {
                 if(res.data.length>0){
                     this.setState({
@@ -248,24 +248,28 @@ componentDidMount() {
                                                     <tr className="bg-dark text-light">
                                                         <th>Order Id</th>
                                                         <th>Items</th>
-                                                        <th>Ordered By</th>
-                                                        <th>Actions</th>
+                                                        <th>Status</th>
+                                                        <th>Total</th>
+                                                        <th>Date</th>
                                                     </tr>
                                                 </MDBTableHead>
                                                 <MDBTableBody>
                                                     {this.state.allOrders.map((res, index) => (
                                                             <tr>
-                                                                <td>{res._orderId}</td>
+                                                                <td>{res._id}</td>
                                                                 <td>{
                                                                     res.items.map((result, index) => (
                                                                         <tr>
                                                                             <td>{result._id}</td>
                                                                             <td>{result.itemName}</td>
+                                                                            {/*<td>{result.quantity}</td>*/}
+                                                                            {/*<td>{result.unitPrice}</td>*/}
                                                                         </tr>
                                                                     ))
                                                                 }</td>
-                                                                <td>{res.placedEmployee}</td>
-                                                               
+                                                                <td>{res.requistion.status}</td>
+                                                                <td>{res.totalAmount}</td>
+                                                                <td>{res.orderDate}</td>
                                                             </tr>
                                                         )
                                                     )}
@@ -456,20 +460,21 @@ componentDidMount() {
                                                                 <td>{res.employeeCount}</td>
                                                                 <td>{res.siteManagerld}</td>
                                                                 {
-                                                                    this.state.siteType ==="mySites" &&
+                                                                    // this.state.siteType ==="mySites"
                                                                     <td>
-                                                                    <div className="btn-group">
-                                                                        <button
-                                                                            type="button"
-                                                                           onClick={() => this.deleteSiteById(res.siteId)}
-                                                                            className="btn btn-danger btn-sm"
-                                                                        >
-                                                                            {" "}<MDBIcon far icon="trash-alt"/>
-                                                                            {" "} Delete{" "}
-                                                                        </button>
-                                                                        
-                                                                    </div>
-                                                                </td>
+                                                                        <div className="btn-group">
+                                                                            <button
+                                                                                type="button"
+                                                                                onClick={() => this.deleteSiteById(res.siteId)}
+                                                                                className="btn btn-danger btn-sm"
+                                                                            >
+                                                                                {" "}<MDBIcon far icon="trash-alt"/>
+                                                                                {" "} Delete{" "}
+                                                                            </button>
+
+                                                                        </div>
+                                                                    </td>
+                                                                }
                                                             </tr>
                                                         )
                                                     )}
