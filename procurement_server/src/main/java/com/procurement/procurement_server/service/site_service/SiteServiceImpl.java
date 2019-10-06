@@ -67,8 +67,18 @@ public class SiteServiceImpl implements ISiteService {
 		}
 		return new ResponseEntity<>(siteList, HttpStatus.OK);
 	}
+
+	@Override
+	public ResponseEntity updateSite(Site site) {
+		return new ResponseEntity<>(siteRepo.save(site), HttpStatus.OK);
+
+	}
 	
 
+	@Override
+	public ResponseEntity getSiteByID(String ID) {
+		return new ResponseEntity<>(siteRepo.findById(ID), HttpStatus.OK);
+	}
 	
 	
 }

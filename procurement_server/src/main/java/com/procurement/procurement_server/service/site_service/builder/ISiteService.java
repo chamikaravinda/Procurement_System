@@ -9,5 +9,8 @@ public interface ISiteService {
 	public ResponseEntity getAllSites();
 	public ResponseEntity deleteSiteByID(String id);
 	public ResponseEntity getAllSitesByAddedUser(String id);
+	public ResponseEntity updateSite(Site site);
+	public ResponseEntity getSiteByID(String ID);
+
 }	
 

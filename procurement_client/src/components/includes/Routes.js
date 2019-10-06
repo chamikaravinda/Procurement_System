@@ -7,6 +7,8 @@ import UserRegister from '../userManagment/register.component';
 import AddSupplier from '../supplierManagement/AddSuppliers';
 import Main from '../pages/MainPage';
 import AddSite from '../siteManagement/AddSite.component';
+import EditSite from '../siteManagement/EditSite.component';
+
 
 class Routes extends React.Component {
     render() {
@@ -17,6 +19,7 @@ class Routes extends React.Component {
                 <Route path='/supplier' component={AddSupplier}/>
                 <Route path='/404' component={NotFoundPage}/>
                 <Route path='/add-site' component={AddSite}/>
+                <Route path="/edit-site/:id" component={EditSite} />
             </Switch>
         );
     }

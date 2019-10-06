@@ -420,6 +420,17 @@ export default class DashboardPage extends Component {
                                                                         </button>
                                                                         
                                                                     </div>
+                                                                    <div className="btn-group">
+                                                                        <Link to = {"/edit-site/"+res.siteId}>
+                                                                            <button
+                                                                                type="button"
+                                                                                className="btn btn-primary btn-sm"
+                                                                            >
+                                                                                {" "}<MDBIcon far icon="trash-alt"/>
+                                                                                {" "} Edit{" "}
+                                                                            </button>
+                                                                        </Link>                                                                   
+                                                                    </div>
                                                                 </td>
                                                                 }
                                                             </tr>
