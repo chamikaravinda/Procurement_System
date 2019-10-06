@@ -71,6 +71,10 @@ public class ServiceHandler {
                 return addSite((Site) obj);
             case CommonConstants.GET_ALL_SITE_REQUEST:
                 return getAllSites();    
+            case CommonConstants.DELETE_SITE_BY_ID:
+            	return deletSiteByID(uid);
+            case CommonConstants.GET_SITE_BY_ADDED_USER_REQUEST:
+                return getSitesByAddedUser(uid);  
             case CommonConstants.GET_STAFF_BY_TYPE :
             	return getStaffMembersByType(uid);
             case CommonConstants.GET_AVAILABLE_SUPPLIER_ITEMS:
@@ -360,6 +364,13 @@ public class ServiceHandler {
     	return null;
     }
     
+    private ResponseEntity deletSiteByID(String id) {
+    	return siteService.deleteSiteByID(id);
+    }
+    
+    private ResponseEntity getSitesByAddedUser(String id) {
+    	return siteService.getAllSitesByAddedUser(id);
+    }
     /*---------Item------------- */
 	
     private ResponseEntity addNewItem(Item obj) {
