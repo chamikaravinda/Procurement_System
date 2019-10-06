@@ -8,6 +8,7 @@ import AddSupplier from '../supplierManagement/AddSuppliers';
 import Main from '../pages/MainPage';
 import AddItem from '../supplierManagement/addItem';
 import UpdateItem from '../supplierManagement/updateItem';
+import AddSite from '../siteManagement/AddSite.component';
 
 
 class Routes extends React.Component {
@@ -20,6 +21,8 @@ class Routes extends React.Component {
                 <Route path='/404' component={NotFoundPage}/>
                 <Route path='/addItem' component={AddItem}/>
                 <Route path='/updateItem' component={UpdateItem}/>
+                <Route path='/add-site' component={AddSite}/>
+
             </Switch>
         );
     }

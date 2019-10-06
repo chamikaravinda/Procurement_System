@@ -20,7 +20,20 @@ export default class DashboardPage extends Component {
             withoutQtyItem:[],
             withQtyItemDelete:[],
             withoutQtyItemDelete:[]
+            sites:[],
+            siteType:"allSites"
+
         }
+
+        this.onChangeSityType=this.onChangeSityType.bind(this);
+    }
+
+    
+    onChangeSityType(e){
+        this.setState({
+            siteType:e.target.value
+        })
+        this.getSiteDetails(localStorage.getItem("id"),e.target.value);
     }
 
     fileDelete(_id) {
@@ -37,7 +50,17 @@ export default class DashboardPage extends Component {
             });
     }
 
-    itemDelete(_id) {
+  deleteSiteById(_id) {
+        axios.get('http://localhost:5001/api/construction/data?RT=73&Uid=' + _id)
+            .then(res => {
+                this.getSiteDetails(localStorage.getItem("id"))
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+  
+      itemDelete(_id) {
         console.log("Auto Called" + _id);
         axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
             .then(res => {
@@ -50,8 +73,7 @@ export default class DashboardPage extends Component {
                 console.log(err);
             });
     }
-
-    withoutItemDelete(_id) {
+       withoutItemDelete(_id) {
         console.log("Auto Called" + _id);
         axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
             .then(res => {
@@ -79,7 +101,8 @@ export default class DashboardPage extends Component {
             });
     }
 
-    componentDidMount() {
+
+componentDidMount() {
         axios.get('http://localhost:5001/api/construction/data?RT=29')
             .then(res => {
                 console.log(res.data);
@@ -89,7 +112,7 @@ export default class DashboardPage extends Component {
                 })
             })
             .catch(err => {
-                console.log(err); 
+                console.log(err);
             });
 
         axios.get('http://localhost:5001/api/construction/data?RT=31')
@@ -104,43 +127,65 @@ export default class DashboardPage extends Component {
                 console.log(err);
             });
 
-            if (localStorage.getItem('userType') === "Finance") {
-                axios.get('http://localhost:5001/api/construction/data?RT=1003')
-                .then(res => {
-                    console.log("item with quantity" + res.data);
-                    this.setState({
-                        withQtyItem: res.data,
-    
-                    })
+        axios.get('http://localhost:5001/api/construction/data?RT=1003')
+            .then(res => {
+                console.log("item with quantity" + res.data);
+                this.setState({
+                    withQtyItem: res.data,
+
                 })
-                .catch(err => {
-                    console.log(err);
-                });
-    
-                axios.get('http://localhost:5001/api/construction/data?RT=1004')
-                .then(res => {
-                    console.log("item without quantity" + res.data);
-                    this.setState({
-                        withoutQtyItem: res.data,
-    
-                    })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        axios.get('http://localhost:5001/api/construction/data?RT=1004')
+            .then(res => {
+                console.log("item without quantity" + res.data);
+                this.setState({
+                    withoutQtyItem: res.data,
+
                 })
-                .catch(err => {
-                    console.log(err);
-                });
-                
-                
-                
-    
-            }
-            
-            
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+        if (localStorage.getItem('userType') === "Supervisor") {
+            this.getSiteDetails(localStorage.getItem("id"),this.state.siteType);
+        }
     }
 
-    
-
-    
-
+    getSiteDetails(id,type){
+        if(type === "allSites"){
+            console.log("All sites loaded");
+            axios.get('http://localhost:5001/api/construction/data?RT=72')
+            .then(res => {
+                this.setState({
+                    sites: res.data,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }else{
+            console.log("My sites loaded");
+            axios.get('http://localhost:5001/api/construction/data?RT=74&Uid=' + id)
+            .then(res => {
+                if(res.data.length>0){
+                    this.setState({
+                        sites: res.data
+                        
+                    })
+                }else{
+                    console.log("no sites to show")
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+    }
 
     render() {
         var _getSiteProcurementManagerBoard = () =>
@@ -313,7 +358,6 @@ export default class DashboardPage extends Component {
         </MDBContainer>
 
         <br/> <br/>
-
         <MDBContainer className="text-center">
              <MDBRow md="12">
                 <MDBCol md="12">
@@ -395,9 +439,78 @@ export default class DashboardPage extends Component {
         </MDBContainer>
     </React.Fragment>;
 
+        var _getSupervisorBoard = () =>
+        <React.Fragment>
+                <MDBContainer className="text-center">
+                    <MDBRow md="12">
+                        <MDBCol md="12">
+                            <MDBCard>
+                                <MDBCardBody>
+                                    <MDBRow md="12">
+                                        <MDBCol md="3">
+                                            <select
+                                                id="siteType"
+                                                className="form-control"
+                                                value={this.state.siteType}
+                                                name="siteType" onChange={this.onChangeSityType}
+                                                required
+                                                >
+                                                    <option value="allSites" selected>All Sites</option>
+                                                    <option value="mySites">My Sites</option>
+                                            </select>             
+                                        </MDBCol>
+                                        <MDBCol md="9">
+                                            <Link to="/add-site" ><MDBBtn className="float-right" color="primary" size="sm">Add Site</MDBBtn></Link>          
+                                        </MDBCol>           
+                                    </MDBRow>
+                                    <MDBTable bordered>
+                                        <MDBTableHead>
+                                            <tr className="bg-dark text-light">
+                                                <th>Site Name</th>
+                                                <th>Address</th>
+                                                <th>Employees</th>
+                                                <th>Manager</th>
+                                                {
+                                                    this.state.siteType ==="mySites" &&
+                                                    <th></th>
+                                                }
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                                    {this.state.sites.map((res,index) => (
+                                                            <tr>
+                                                                <td>{res.siteName}</td>
+                                                                <td>{res.siteAddress}</td>
+                                                                <td>{res.employeeCount}</td>
+                                                                <td>{res.siteManagerld}</td>
+                                                                {
+                                                                    this.state.siteType ==="mySites" &&
+                                                                    <td>
+                                                                    <div className="btn-group">
+                                                                        <button
+                                                                            type="button"
+                                                                           onClick={() => this.deleteSiteById(res.siteId)}
+                                                                            className="btn btn-danger btn-sm"
+                                                                        >
+                                                                            {" "}<MDBIcon far icon="trash-alt"/>
+                                                                            {" "} Delete{" "}
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                                }
+                                                            </tr>
+                                                        )
+                                                    )}
 
-
-
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                </MDBCardBody>
+                            </MDBCard>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
+        </React.Fragment>;                                                                    
 
         console.log(localStorage.getItem('userType'));
         if (localStorage.getItem('userType') === "Site Manager") {
@@ -406,6 +519,8 @@ export default class DashboardPage extends Component {
             return (<_getSiteProcurementManagerBoard/>)
         } else if (localStorage.getItem('userType') === "Finance") {
             return (<_getFinancialEmployeeBoard/>)
+        } else if (localStorage.getItem('userType') === "Supervisor") {
+            return (<_getSupervisorBoard/>)
         }
     }
 }

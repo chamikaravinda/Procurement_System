@@ -7,6 +7,7 @@ import UserLogin from '../userManagment/login.component';
 import UserRegister from '../userManagment/register.component';
 import AddSupplier from '../supplierManagement/AddSuppliers';
 import Main from '../pages/MainPage';
+import OrdersComponent from '../orderManagement/orders.component'
 
 import AddItem from '../supplierManagement/addItem';
 
@@ -16,6 +17,7 @@ class MainRoutes extends React.Component {
             <Switch>
                 <Route path='/' exact component={UserLogin} />
                 <Route path='/register' component={UserRegister} />
+                <Route path = '/orders' component = {OrdersComponent} />
                 <Route path='/main' component={Main} />
                 <Route path='/addItem' component={AddItem} />
             </Switch>
