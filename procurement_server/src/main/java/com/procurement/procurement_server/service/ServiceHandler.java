@@ -54,6 +54,8 @@ public class ServiceHandler {
 		case CommonConstants.ADD_ITEM_REQUEST:
 			return addNewItem((Item) obj);
 //---Item
+			
+			/*------------Order Management -----------------------*/
 		case CommonConstants.GET_ALL_USERS:
 			return getAllUsers();
 		case CommonConstants.DELETE_SPECIFIC_USER:
@@ -61,9 +63,15 @@ public class ServiceHandler {
 		case CommonConstants.ADD_ORDER_REQUEST:
 			return handleOrder((Order) obj);
 		case CommonConstants.UPDATE_ORDER_REQUEST:
-			return handleOrder((Order) obj);
-//                case CommonConstants.GET_ALL_ORDERS:
-//                    return getAllOrders();
+			return handleOrder((Order) obj);	
+        case CommonConstants.GET_ALL_ORDERS:
+            return getAllOrders();
+        case CommonConstants.GET_ORDERS_BY_STATUS:
+        	return getOrdersByStatus(uid);
+        case CommonConstants.APPROVE_ORDER_REQUEST : 
+        	return approveOrder((Order) obj);
+        case CommonConstants.DECLINE_ORDER_REQUEST : 
+        	return declineOrder((Order) obj);
 		default:
 			return new ResponseEntity("Failed", HttpStatus.OK);
 		}
@@ -93,7 +101,28 @@ public class ServiceHandler {
 	public static void setIsInitialized(boolean isInitialized) {
 		ServiceHandler.isInitialized = isInitialized;
 	}
+	
+	public ResponseEntity<Object> getAllOrders(){
+		
+		return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
+		
+	}
 
+	public ResponseEntity<Object> getOrdersByStatus( String status ) {
+		System.out.println("Status : " +  status);
+		return new ResponseEntity<>(orderService.getOrdersByStatus(status), HttpStatus.OK);
+	}
+	
+	public ResponseEntity<Object> approveOrder( Order order ){
+	
+		return new ResponseEntity<>(orderService.approveOrder(order) , HttpStatus.OK);
+		
+	}
+	
+	public ResponseEntity<Object> declineOrder( Order order ){
+		return new ResponseEntity<>(orderService.declineOrder(order) , HttpStatus.OK);
+	}
+	
 	public ResponseEntity<Object> handleOrder(Order order) {
 
 		int orderItemQuantity = orderService.calculateQuantity(order.getItems());
@@ -123,10 +152,19 @@ public class ServiceHandler {
 			broker.takeOrder(approveOrder);
 			requisition = broker.placeOrder();
 		}
+		
+		System.out.println("Placed User " + order.getPlacedUser().getStaffId() );
 
-		Order newOrder = new OrderBuilder(order.get_idAsObjectId()).setItems(order.getItems())
-				.setOrderDate(Generator.getCurrentDate()).setPayment(null).setQuantity(orderItemQuantity)
-				.setRequisition(null).setTotalAmount(orderTotal).build();
+		Order newOrder = new OrderBuilder(order.get_idAsObjectId())
+				.setItems(order.getItems())
+				.setOrderDate(Generator.getCurrentDate())
+				.setPayment(null)
+				.setQuantity(orderItemQuantity)
+				.setRequisition(null)
+				.setTotalAmount(orderTotal)
+				.setOrderPlacedUser(order.getPlacedUser())
+				.setOrderApprovedUser(null)
+				.build();
 
 		return new ResponseEntity<>(orderService.addOrder(newOrder, requisition), HttpStatus.OK);
 

@@ -7,7 +7,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.procurement.procurement_server.model.supplier_level.Item;
+import com.procurement.procurement_server.model.user_level.Staff;
 
 @Document( collection = "order")
 public class Order {
@@ -23,26 +25,35 @@ public class Order {
 	@DBRef
 	private Requistion requistion;
 	
-	@DBRef
-	private Payment payment;
-
 	private int quantity;
 	
 	private double totalAmount;
 	
 	private String orderDate;
 
+	@DBRef
+	private Staff placedUser;
 	
-	public Order(ObjectId _id, List<Item> items, Requistion requistion, Payment payment, int quantity,
-			double totalAmount, String orderDate) {
+	@DBRef
+	private Staff approvedUser;
+
+	@DBRef
+	private Payment payment;
+	
+	
+
+	public Order(ObjectId _id, List<Item> items, Requistion requistion, int quantity, double totalAmount,
+			String orderDate, Staff placedUser, Staff approvedUser, Payment payment) {
 		super();
 		this._id = _id;
 		this.items = items;
 		this.requistion = requistion;
-		this.payment = payment;
 		this.quantity = quantity;
 		this.totalAmount = totalAmount;
 		this.orderDate = orderDate;
+		this.placedUser = placedUser;
+		this.approvedUser = approvedUser;
+		this.payment = payment;
 	}
 
 	public String get_id() {
@@ -53,6 +64,7 @@ public class Order {
 		return this._id;
 	}
 	
+
 	public void set_id(ObjectId _id) {
 		this._id = _id;
 	}
@@ -73,14 +85,7 @@ public class Order {
 		this.requistion = requistion;
 	}
 
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
-
+	
 	public int getQuantity() {
 		return quantity;
 	}
@@ -105,12 +110,39 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [_id=" + _id.toHexString() + ", items=" + items + ", requistion=" + requistion + ", payment=" + payment
-				+ ", quantity=" + quantity + ", totalAmount=" + totalAmount + ", orderDate=" + orderDate + "]";
+	
+	public Staff getPlacedUser() {
+		return placedUser;
 	}
 
+	public void setPlacedUser(Staff placedUser) {
+		this.placedUser = placedUser;
+	}
+
+	public Staff getApprovedUser() {
+		return approvedUser;
+	}
+
+	public void setApprovedUser(Staff approvedUser) {
+		this.approvedUser = approvedUser;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [_id=" + _id.toHexString() + ", items=" + items + ", requistion=" + requistion + ", quantity=" + quantity
+				+ ", totalAmount=" + totalAmount + ", orderDate=" + orderDate + ", placedUser=" + placedUser
+				+ ", approvedUser=" + approvedUser + ", payment=" + payment + "]";
+	}
+
+	
 	
 	
 }
