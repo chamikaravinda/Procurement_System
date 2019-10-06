@@ -70,6 +70,7 @@ public class SiteServiceImpl implements ISiteService {
 
 	@Override
 	public ResponseEntity updateSite(Site site) {
+		siteRepo.deleteById(site.getSiteId());
 		return new ResponseEntity<>(siteRepo.save(site), HttpStatus.OK);
 
 	}

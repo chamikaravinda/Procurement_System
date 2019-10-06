@@ -65,6 +65,7 @@ export  class AddSite extends Component {
     axios.get('http://localhost:5001/api/construction/data?RT=76&Uid='+this.props.match.params.id)
     .then(res => {
         this.setState({
+          siteId:this.props.match.params.id,
           siteName:res.data.siteName,
           siteAddress:res.data.siteAddress,
           siteManager:res.data.siteManagerld,
