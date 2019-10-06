@@ -64,9 +64,8 @@ export default class DashboardPage extends Component {
         console.log("Auto Called" + _id);
         axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
             .then(res => {
-                console.log("Response From Delete Request" + res.data.body);
                 this.setState({
-                    withQtyItem: res.data.body,
+                    withQtyItem: res.data,
                 })
             })
             .catch(err => {
@@ -179,6 +178,10 @@ componentDidMount() {
                     })
                 }else{
                     console.log("no sites to show")
+                    this.setState({
+                        siteType: "mySites"
+                        
+                    })
                 }
             })
             .catch(err => {

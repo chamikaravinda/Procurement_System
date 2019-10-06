@@ -19,7 +19,6 @@ class MainRoutes extends React.Component {
                 <Route path='/register' component={UserRegister} />
                 <Route path = '/orders' component = {OrdersComponent} />
                 <Route path='/main' component={Main} />
-                <Route path='/addItem' component={AddItem} />
             </Switch>
         );
     }

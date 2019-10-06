@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn,MDBCard, MDBCardBody } from 'mdbreact';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
-
+import swal from "sweetalert";
 
 export  class AddSite extends Component {
   constructor(props) {
@@ -56,8 +56,13 @@ export  class AddSite extends Component {
         axios.post('http://localhost:5001/api/construction/site/add',newSite)
         .then((response) => {
           console.log(response);
+          swal("Success", "Site added sucessfully", "success");
+          this.props.history.push("/dashboard");
+
         }, (error) => {
           console.log(error);
+          swal("Error", "Something went wrong", "error");
+
         });
   }
 

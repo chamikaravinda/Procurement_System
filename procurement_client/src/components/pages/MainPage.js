@@ -14,7 +14,7 @@ function Main() {
             <div className="flexible-content" >
                 <TopNavigation />
                 <SideNavigation />
-                <main id="content" className="p-5" style={{minHeight:'100vh'}}>
+                <main id="content" className="p-5" style={{minHeight:'100vh',background:"https://wallpaperaccess.com/full/773786.jpg"}}>
                     <Routes />
                 </main>
                 <Footer />
