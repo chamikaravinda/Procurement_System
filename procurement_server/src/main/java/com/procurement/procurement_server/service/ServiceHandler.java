@@ -187,9 +187,161 @@ public class ServiceHandler {
     }
 
 
+
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	ItemService itemService;
+
+	@Autowired
+	DataServer dataServer;
+
+	@Autowired
+	OrderServiceImpl orderService;
+
+	public ResponseEntity handleServiceRequest(String reqId, Object obj, String uid) {
+		if (!isIsInitialized()) {
+			startDataServer();
+			setIsInitialized(true);
+		}
+		
+		System.out.println("##########service handler  with Item");
+		switch (Integer.parseInt(reqId)) {
+		case CommonConstants.GET_USER_REQUEST:
+			return getRequiredUser(obj);
+		case CommonConstants.ADD_USER_REQUEST:
+			return addNewUser(obj);
+/*-----Item ------*/
+		case CommonConstants.ADD_ITEM_REQUEST:
+			return addNewItem((Item) obj);
+//---Item
+			
+			/*------------Order Management -----------------------*/
+		case CommonConstants.GET_ALL_USERS:
+			return getAllUsers();
+		case CommonConstants.DELETE_SPECIFIC_USER:
+			return deleteSpecificUser(uid);
+		case CommonConstants.ADD_ORDER_REQUEST:
+			return handleOrder((Order) obj);
+		case CommonConstants.UPDATE_ORDER_REQUEST:
+			return handleOrder((Order) obj);	
+        case CommonConstants.GET_ALL_ORDERS:
+            return getAllOrders();
+        case CommonConstants.GET_ORDERS_BY_STATUS:
+        	return getOrdersByStatus(uid);
+        case CommonConstants.APPROVE_ORDER_REQUEST : 
+        	return approveOrder((Order) obj);
+        case CommonConstants.DECLINE_ORDER_REQUEST : 
+        	return declineOrder((Order) obj);
+		default:
+			return new ResponseEntity("Failed", HttpStatus.OK);
+		}
+	}
+
+	private ResponseEntity addNewItem(Item obj) {
+		return itemService.addNewItem(obj);
+		
+	}
+
+	private ResponseEntity getRequiredUser(Object obj) {
+		return userService.getRequiredUser((User) obj);
+	}
+
+	private ResponseEntity addNewUser(Object obj) {
+		return userService.addNewUser(obj);
+	}
+
+	private void startDataServer() {
+		dataServer.startDataServer();
+	}
+
+	public static boolean isIsInitialized() {
+		return isInitialized;
+	}
+
+	public static void setIsInitialized(boolean isInitialized) {
+		ServiceHandler.isInitialized = isInitialized;
+	}
+	
+	public ResponseEntity<Object> getAllOrders(){
+		
+		return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
+		
+	}
+
+	public ResponseEntity<Object> getOrdersByStatus( String status ) {
+		System.out.println("Status : " +  status);
+		return new ResponseEntity<>(orderService.getOrdersByStatus(status), HttpStatus.OK);
+	}
+	
+	public ResponseEntity<Object> approveOrder( Order order ){
+	
+		return new ResponseEntity<>(orderService.approveOrder(order) , HttpStatus.OK);
+		
+	}
+	
+	public ResponseEntity<Object> declineOrder( Order order ){
+		return new ResponseEntity<>(orderService.declineOrder(order) , HttpStatus.OK);
+	}
+	
+	public ResponseEntity<Object> handleOrder(Order order) {
+
+		int orderItemQuantity = orderService.calculateQuantity(order.getItems());
+		double orderTotal = orderService.calculateTotal(order.getItems());
+
+		Requistion requisition = new Requistion();
+
+		ApprovedOrder approveOrder = new ApprovedOrder(requisition);
+		PendingOrder pendingOrder = new PendingOrder(requisition);
+
+		if (order.get_idAsObjectId() == null) {
+			System.out.println("id is null");
+			requisition.set_id(new ObjectId());
+		} else {
+			System.out.println("id is not null");
+			requisition = order.getRequistion();
+		}
+
+		/*-----------------------------------------------------------*/
+
+		OrderBroker broker = new OrderBroker();
+
+		if (orderTotal > CommonConstants.ORDER_LIMIT) {
+			broker.takeOrder(pendingOrder);
+			requisition = broker.placeOrder();
+		} else {
+			broker.takeOrder(approveOrder);
+			requisition = broker.placeOrder();
+		}
+		
+		System.out.println("Placed User " + order.getPlacedUser().getStaffId() );
+
+		Order newOrder = new OrderBuilder(order.get_idAsObjectId())
+				.setItems(order.getItems())
+				.setOrderDate(Generator.getCurrentDate())
+				.setPayment(null)
+				.setQuantity(orderItemQuantity)
+				.setRequisition(null)
+				.setTotalAmount(orderTotal)
+				.setOrderPlacedUser(order.getPlacedUser())
+				.setOrderApprovedUser(null)
+				.build();
+
+		return new ResponseEntity<>(orderService.addOrder(newOrder, requisition), HttpStatus.OK);
+
+	}
+
+
+
+	private ResponseEntity deleteSpecificUser(String uid) {
+		return userService.deleteSpecificUser(uid);
+	}
+
     private ResponseEntity getAllUsers() {
         return userService.getAllUsers();
     }
+
 
     private ResponseEntity deleteSpecificUser(String uid) {
         return userService.deleteSpecificUser(uid);

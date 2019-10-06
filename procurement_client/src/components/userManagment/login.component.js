@@ -67,9 +67,12 @@ export default class UserLogin extends Component {
                     } else if (res.data === "Invalid Password") {
                         swal("Error", "Invalid Password", "error");
                     } else {
+                        console.log(res.data);
                         localStorage.setItem('name', res.data.firstName);
                         localStorage.setItem('userType', res.data.type);
-                        localStorage.setItem('id', res.data.id);
+
+                        localStorage.setItem('id', res.data._id);
+
                         this.props.history.push("/main");
                         // window.location.reload();
                     }

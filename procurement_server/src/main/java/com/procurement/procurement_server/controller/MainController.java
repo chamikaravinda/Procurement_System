@@ -19,9 +19,9 @@ import com.procurement.procurement_server.service.DataServer;
 import com.procurement.procurement_server.service.ServiceHandler;
 import com.procurement.procurement_server.util.CommonConstants;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = CommonConstants.ORIGINS, allowedHeaders = CommonConstants.ALLOWED_HEADERS)
 @RestController
-@RequestMapping("/api/construction")
+@RequestMapping(CommonConstants.MAPPING_MAIN)
 
 @Controller
 public class MainController {
@@ -68,11 +68,27 @@ public class MainController {
     public ResponseEntity<Object> updateOrder( @RequestBody Order order ){
     	return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.UPDATE_ORDER_REQUEST), order, "");
     }
-
-
-   /*-----------test add and get item-----------------------------*/
-   
     
+    @GetMapping(CommonConstants.MAPPING_GET_ALL_ORDERS)
+    public ResponseEntity<Object> getAllOrders(){
+    	return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.GET_ALL_ORDERS_REQUEST), null , "" );
+    }
+    
+    @GetMapping( CommonConstants.MAPPING_GET_ORDER_BY_STATUS )
+    public ResponseEntity<Object> getOrdersByStatus( @PathVariable String status ){
+    	System.out.println("Get All orders");
+    	return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.GET_ORDERS_BY_STATUS), null , status );
+    }
+   
+    @PutMapping( CommonConstants.MAPPING_APPROVE_ORDER )
+    public ResponseEntity<Object> approveOrder(@RequestBody Order order ){
+    	return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.APPROVE_ORDER_REQUEST), order , null );
+    }
+    
+    @PutMapping( CommonConstants.MAPPING_DECLINE_ORDER )
+    public ResponseEntity<Object> declineOrder( @RequestBody Order order ){
+    	return serviceHandler.handleServiceRequest(Integer.toString(CommonConstants.DECLINE_ORDER_REQUEST), order , null );
+    }
 	
     @PostMapping("item/addItem")
     public ResponseEntity addNewItem(@RequestBody Object obj) {

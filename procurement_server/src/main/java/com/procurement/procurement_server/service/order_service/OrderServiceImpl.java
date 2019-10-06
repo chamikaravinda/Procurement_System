@@ -1,8 +1,13 @@
 package com.procurement.procurement_server.service.order_service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.procurement.procurement_server.service.order_service.builder.ApprovedOrder;
+import com.procurement.procurement_server.service.order_service.builder.DeclinedOrder;
 import com.procurement.procurement_server.service.order_service.builder.IOrderService;
+import com.procurement.procurement_server.service.order_service.builder.OrderBroker;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +36,25 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getAllOrders() {
 		return orderRepo.findAll();
+	}
+	
+	@Override
+	@Transactional
+	public List<Order> getOrdersByStatus( String status ){
+		List<Order> tempOrderList = new ArrayList<Order>();
+		
+		for( Order tempOrder : orderRepo.findAll() ) {
+			System.out.println("Order : " + tempOrder );
+			System.out.println("Requistion  : " + tempOrder.getRequistion() );
+			if( tempOrder.getRequistion().getStatus().equalsIgnoreCase(status) ) {
+				tempOrderList.add(tempOrder);
+			}
+		}
+		
+		return tempOrderList;
 	}
 
 	@Override
@@ -76,6 +98,45 @@ public class OrderServiceImpl implements IOrderService {
 		 */
 		return total;
 
+	}
+
+	@Override
+	@Transactional
+	public Requistion approveOrder(Order order) {
+		
+		Order tempOrder = orderRepo.findOrderBy_id(order.get_id());
+		
+		ApprovedOrder approveOrder = new ApprovedOrder(tempOrder.getRequistion());
+		Requistion requisition = tempOrder.getRequistion();
+		
+		OrderBroker broker = new OrderBroker();
+		
+		broker.takeOrder(approveOrder);
+		requisition = broker.placeOrder();
+		tempOrder.setApprovedUser(order.getApprovedUser());
+		
+		orderRepo.save(tempOrder);
+		return requistionRepo.save(requisition);
+		
+	}
+
+	@Override
+	@Transactional
+	public Requistion declineOrder(Order order) {
+		Order tempOrder = orderRepo.findOrderBy_id(order.get_id());
+		
+		DeclinedOrder declineOrder = new DeclinedOrder(tempOrder.getRequistion());
+		Requistion requisition = tempOrder.getRequistion();
+		
+		OrderBroker broker = new OrderBroker();
+		
+		broker.takeOrder(declineOrder);
+		requisition = broker.placeOrder();
+		tempOrder.setApprovedUser(order.getApprovedUser());
+		
+		orderRepo.save(tempOrder);
+		return requistionRepo.save(requisition);
+		
 	}
 
 }
