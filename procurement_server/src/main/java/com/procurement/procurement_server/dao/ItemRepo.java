@@ -6,5 +6,5 @@ import com.procurement.procurement_server.model.supplier_level.Item;
 
 
 public interface ItemRepo extends MongoRepository<Item, String>{
-
+	long deleteBy_id(String id);
 }

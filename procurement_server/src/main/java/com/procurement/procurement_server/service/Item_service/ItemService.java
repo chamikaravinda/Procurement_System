@@ -2,6 +2,7 @@ package com.procurement.procurement_server.service.Item_service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,8 @@ public class ItemService {
 
 		List<Item> allItemList = itemRepo.findAll();
 		List<Item> tempItemList = new ArrayList<Item>();
+		
+		
 
 		for (Item item : allItemList) {
 
@@ -62,5 +65,18 @@ public class ItemService {
 
 	}
 
+	public ResponseEntity deleteSpecifiItem(String uid) {
+		
+
+		itemRepo.deleteBy_id(uid);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+		
+	}
+
+	
+	
+		
+
+	
 
 }

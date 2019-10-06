@@ -1,8 +1,9 @@
-    import React, {Component, Fragment} from 'react';
-import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBRow, MDBIcon} from "mdbreact";
+import React, {Component, Fragment} from 'react';
+import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBRow, MDBIcon,MDBView} from "mdbreact";
 import axios from "axios";
 import {MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import swal from "sweetalert";
 
 
 export default class DashboardPage extends Component {
@@ -17,8 +18,11 @@ export default class DashboardPage extends Component {
             email: '',
             withQtyItem:[],
             withoutQtyItem:[],
+            withQtyItemDelete:[],
+            withoutQtyItemDelete:[]
             sites:[],
             siteType:"allSites"
+
         }
 
         this.onChangeSityType=this.onChangeSityType.bind(this);
@@ -46,7 +50,7 @@ export default class DashboardPage extends Component {
             });
     }
 
-    deleteSiteById(_id) {
+  deleteSiteById(_id) {
         axios.get('http://localhost:5001/api/construction/data?RT=73&Uid=' + _id)
             .then(res => {
                 this.getSiteDetails(localStorage.getItem("id"))
@@ -55,9 +59,50 @@ export default class DashboardPage extends Component {
                 console.log(err);
             });
     }
+  
+      itemDelete(_id) {
+        console.log("Auto Called" + _id);
+        axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
+            .then(res => {
+                console.log("Response From Delete Request" + res.data.body);
+                this.setState({
+                    withQtyItem: res.data.body,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+       withoutItemDelete(_id) {
+        console.log("Auto Called" + _id);
+        axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
+            .then(res => {
+                console.log("Response From Delete Request" + res.data.body);
+                this.setState({
+                    withoutQtyItemDelete:res.data.body,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    Updateitem(_id) {
+        console.log("Auto Called" + _id);
+        axios.get('http://localhost:5001/api/construction/data?RT=1005&Uid=' + _id)
+            .then(res => {
+                console.log("Response From Delete Request" + res.data.body);
+                this.setState({
+                    withQtyItem: res.data.body,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 
 
-    componentDidMount() {
+componentDidMount() {
         axios.get('http://localhost:5001/api/construction/data?RT=29')
             .then(res => {
                 console.log(res.data);
@@ -258,7 +303,13 @@ export default class DashboardPage extends Component {
                             <>
                                 <div className="container border-bottom">
                                     <br/> <br/>
-                                    <h4>Item with Quantity</h4>
+                                    <MDBView className="gradient-card-header blue darken-2">
+                                    <h4 className="h4-responsive text-white">
+                                     Available Quantity 
+                                     <Link to="/addItem"><button className="btn btn-primary btn-sm" >New</button></Link>
+                                    </h4>
+                                    </MDBView>
+                                    
                                     <br/> <br/>
                                     <MDBTable bordered>
                                         <MDBTableHead>
@@ -282,7 +333,8 @@ export default class DashboardPage extends Component {
                                                                     <div className="btn-group">
                                                                         <button
                                                                             type="button"
-                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            onClick={() =>this.itemDelete(res._id)}
+                                                                            
                                                                             className="btn btn-danger btn-sm"
                                                                         >
                                                                             {" "}<MDBIcon far icon="trash-alt"/>
@@ -314,7 +366,11 @@ export default class DashboardPage extends Component {
                             <>
                                 <div className="container border-bottom">
                                     <br/> <br/>
-                                    <h4>Item without Quantity</h4>
+                                    <MDBView className="gradient-card-header blue darken-2">
+                                    <h4 className="h4-responsive text-white">
+                                    Not Available Quantity 
+                                    </h4>
+                                    </MDBView>
                                     <br/> <br/>
                                     <MDBTable bordered>
                                         <MDBTableHead>
@@ -336,14 +392,35 @@ export default class DashboardPage extends Component {
                                                                 
                                                                 <td>
                                                                     <div className="btn-group">
-                                                                        <button
-                                                                            type="button"
-                                                                           // onClick={() => this.fileDelete(result.staffId)}
-                                                                            className="btn btn-danger btn-sm"
-                                                                        >
-                                                                            {" "}<MDBIcon far icon="trash-alt"/>
-                                                                            {" "} Delete{" "}
-                                                                        </button>
+                                                                        
+                                                                        <div>
+                                                                            <button
+                                                                                type="button"
+                                                                            onClick={() => this.withQtyItem(res._id)}
+                                                                                className="btn btn-danger btn-sm"
+                                                                            >
+                                                                                {" "}<MDBIcon far icon="trash-alt"/>
+                                                                                {" "} Delete{" "}
+                                                                            </button>
+
+                                                                        </div>
+
+                                                                        <div>
+
+                                                                                <button
+                                                                                    type="button"
+                                                                                 onClick={() => this.Updateitem(res._id)}
+                                                                                    className="btn btn-primary btn-sm"
+                                                                                >
+                                                                                    {" "}<MDBIcon far icon="trash-alt"/>
+                                                                                    {" "} Update{" "}
+                                                                                </button>
+
+                                                                        </div>
+                                                                        
+                                                                        
+                                                                        
+
                                                                         
                                                                     </div>
                                                                 </td>
