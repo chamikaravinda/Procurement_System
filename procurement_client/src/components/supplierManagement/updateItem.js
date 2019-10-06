@@ -1,13 +1,19 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn,MDBCard, MDBCardBody } from 'mdbreact';
 import swal from "sweetalert";
 
-export  class AddItem extends Component {
+export  class UpdateItem extends Component {
 
 
     constructor(props) {
         super(props);
+        this.onChangeItemName = this.onChangeItemName.bind(this);
+        this.onChangeItemPrice = this.onChangeItemPrice.bind(this);
+        this.onChangeItemQty = this.onChangeItemQty.bind(this);
+       
+        this.onSubmit = this.onSubmit.bind(this);
+
         this.state = {
           itemName: null,
           quantity: null,
@@ -16,12 +22,6 @@ export  class AddItem extends Component {
 
            
         };
-
-        this.onChangeItemName = this.onChangeItemName.bind(this);
-        this.onChangeItemPrice = this.onChangeItemPrice.bind(this);
-        this.onChangeItemQty = this.onChangeItemQty.bind(this);
-       
-        this.onSubmit = this.onSubmit.bind(this);
     }
  
 
@@ -47,14 +47,14 @@ export  class AddItem extends Component {
 
   onSubmit(e){
     e.preventDefault();
-    let addItem = {
+    let updateItem = {
       itemName: this.state.itemName,
       quantity:this.state.quantity,
       unitPrice:this.state.unitPrice
     };
   
     axios
-        .post('http://localhost:5001/api/construction/item/addItem' ,addItem)
+        .post('http://localhost:5001/api/construction/item/updateItem' ,updateItem)
         .then(res => {
             console.log(res);
             swal("Success", "Item added sucessfully", "success");
@@ -75,8 +75,8 @@ render(){
         <MDBCol md="6">
         <MDBCard>
             <MDBCardBody>
-          <form onSubmit={this.onSubmit}>
-            <p className="h4 text-center mb-4">Add Item</p>
+          <form>
+            <p className="h4 text-center mb-4">Update Item</p>
             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
               Item name
             </label>
@@ -111,7 +111,7 @@ render(){
          
             <div className="text-center mt-4">
               <MDBBtn color="green" type="submit">
-                Add
+                Update
               </MDBBtn>
             </div>
           </form>
@@ -126,4 +126,4 @@ render(){
 
 }
 
-export default AddItem;
+export default UpdateItem;

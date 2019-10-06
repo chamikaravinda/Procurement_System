@@ -10,6 +10,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface StaffRepo extends MongoRepository<Staff, String> {
 	List<Staff> findBytype(String type);
 	List<Staff> findAll();
-	List<Staff> findBystaffId(String type);
+	List<Staff> findBystaffId(String Id);
 
 }

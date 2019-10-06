@@ -46,5 +46,29 @@ public class SiteServiceImpl implements ISiteService {
 		return new ResponseEntity<>(siteList, HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity deleteSiteByID(String id) {
+		siteRepo.deleteById(id);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+
+	}
+
+	@Override
+	public ResponseEntity getAllSitesByAddedUser(String id) {
+		List<Site> siteList =siteRepo.findByaddedBy(id);
+		for(Site site:siteList) {
+				List<Staff> staff =staffRepo.findBystaffId(site.getSiteManagerld());
+				for(Staff s:staff) {
+				site.setSiteManagerld(s.getFirstName());
+				}
+		}
+		if(siteList.size()==0) {
+			siteList=null;
+		}
+		return new ResponseEntity<>(siteList, HttpStatus.OK);
+	}
+	
+
+	
 	
 }

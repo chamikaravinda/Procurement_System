@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+    import React, {Component, Fragment} from 'react';
 import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBRow, MDBIcon} from "mdbreact";
 import axios from "axios";
 import {MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
@@ -17,8 +17,22 @@ export default class DashboardPage extends Component {
             email: '',
             withQtyItem:[],
             withoutQtyItem:[],
-            sites:[]
+            withQtyItemDelete:[],
+            withoutQtyItemDelete:[]
+            sites:[],
+            siteType:"allSites"
+
         }
+
+        this.onChangeSityType=this.onChangeSityType.bind(this);
+    }
+
+
+    onChangeSityType(e){
+        this.setState({
+            siteType:e.target.value
+        })
+        this.getSiteDetails(localStorage.getItem("id"),e.target.value);
     }
 
     fileDelete(_id) {
@@ -35,8 +49,59 @@ export default class DashboardPage extends Component {
             });
     }
 
+  deleteSiteById(_id) {
+        axios.get('http://localhost:5001/api/construction/data?RT=73&Uid=' + _id)
+            .then(res => {
+                this.getSiteDetails(localStorage.getItem("id"))
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 
-    componentDidMount() {
+      itemDelete(_id) {
+        console.log("Auto Called" + _id);
+        axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
+            .then(res => {
+                console.log("Response From Delete Request" + res.data.body);
+                this.setState({
+                    withQtyItem: res.data.body,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+       withoutItemDelete(_id) {
+        console.log("Auto Called" + _id);
+        axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
+            .then(res => {
+                console.log("Response From Delete Request" + res.data.body);
+                this.setState({
+                    withoutQtyItemDelete:res.data.body,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    Updateitem(_id) {
+        console.log("Auto Called" + _id);
+        axios.get('http://localhost:5001/api/construction/data?RT=1005&Uid=' + _id)
+            .then(res => {
+                console.log("Response From Delete Request" + res.data.body);
+                this.setState({
+                    withQtyItem: res.data.body,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+
+componentDidMount() {
         axios.get('http://localhost:5001/api/construction/data?RT=29')
             .then(res => {
                 console.log(res.data);
@@ -96,13 +161,24 @@ export default class DashboardPage extends Component {
             .catch(err => {
                 console.log(err);
             })
+        }else{
+            console.log("My sites loaded");
+            axios.get('http://localhost:5001/api/construction/data?RT=74&Uid=' + id)
+            .then(res => {
+                if(res.data.length>0){
+                    this.setState({
+                        sites: res.data
+
+                    })
+                }else{
+                    console.log("no sites to show")
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
     }
-
-
-
-
-
 
     render() {
         var _getSiteProcurementManagerBoard = () =>
@@ -184,34 +260,12 @@ export default class DashboardPage extends Component {
                                                                     res.items.map((result, index) => (
                                                                         <tr>
                                                                             <td>{result._id}</td>
-                                                                            < td> {result.itemName}</td>
+                                                                            <td>{result.itemName}</td>
                                                                         </tr>
                                                                     ))
                                                                 }</td>
                                                                 <td>{res.placedEmployee}</td>
-                                                                {/*<td>*/}
-                                                                {/*    <div className="btn-group">*/}
-                                                                {/*        <button*/}
-                                                                {/*            type="button"*/}
-                                                                {/*            onClick={() => this.fileDelete(res.staffId)}*/}
-                                                                {/*            className="btn btn-danger btn-sm"*/}
-                                                                {/*        >*/}
-                                                                {/*            {" "}<MDBIcon far icon="trash-alt"/>*/}
-                                                                {/*            {" "} Delete{" "}*/}
-                                                                {/*        </button>*/}
-                                                                {/*        /!*<Link to={"/report/" + result.staffId}*!/*/}
-                                                                {/*        /!*      className="btn btn-primary btn-sm">*!/*/}
-                                                                {/*        /!*    {" "}<MDBIcon icon="chart-line"/>*!/*/}
-                                                                {/*        /!*    {" "} Analyse{" "}*!/*/}
-                                                                {/*        /!*</Link>*!/*/}
-                                                                {/*        /!*<Link to={"/assign/" + result.staffId}*!/*/}
-                                                                {/*        /!*      className="btn btn-primary btn-sm">*!/*/}
-                                                                {/*        /!*    {" "}<MDBIcon icon="bug"*!/*/}
-                                                                {/*        /!*                  style={{color: '#FFF'}}/>*!/*/}
-                                                                {/*        /!*    {" "} Assign{" "}*!/*/}
-                                                                {/*        /!*</Link>*!/*/}
-                                                                {/*    </div>*/}
-                                                                {/*</td>*/}
+                                                               
                                                             </tr>
                                                         )
                                                     )}
@@ -242,7 +296,13 @@ export default class DashboardPage extends Component {
                             <>
                                 <div className="container border-bottom">
                                     <br/> <br/>
-                                    <h4>Item with Quantity</h4>
+                                    <MDBView className="gradient-card-header blue darken-2">
+                                    <h4 className="h4-responsive text-white">
+                                     Available Quantity
+                                     <Link to="/addItem"><button className="btn btn-primary btn-sm" >New</button></Link>
+                                    </h4>
+                                    </MDBView>
+
                                     <br/> <br/>
                                     <MDBTable bordered>
                                         <MDBTableHead>
@@ -261,18 +321,19 @@ export default class DashboardPage extends Component {
                                                                 <td>{res.itemName}</td>
                                                                 <td>{res.unitPrice}</td>
                                                                 <td>{res.quantity}</td>
-
+                                                                
                                                                 <td>
                                                                     <div className="btn-group">
                                                                         <button
                                                                             type="button"
-                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                            onClick={() =>this.itemDelete(res._id)}
+
                                                                             className="btn btn-danger btn-sm"
                                                                         >
                                                                             {" "}<MDBIcon far icon="trash-alt"/>
                                                                             {" "} Delete{" "}
                                                                         </button>
-
+                                                                        
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -298,7 +359,11 @@ export default class DashboardPage extends Component {
                             <>
                                 <div className="container border-bottom">
                                     <br/> <br/>
-                                    <h4>Item without Quantity</h4>
+                                    <MDBView className="gradient-card-header blue darken-2">
+                                    <h4 className="h4-responsive text-white">
+                                    Not Available Quantity
+                                    </h4>
+                                    </MDBView>
                                     <br/> <br/>
                                     <MDBTable bordered>
                                         <MDBTableHead>
@@ -317,7 +382,7 @@ export default class DashboardPage extends Component {
                                                                 <td>{res.itemName}</td>
                                                                 <td>{res.unitPrice}</td>
                                                                 <td>{res.quantity}</td>
-
+                                                                
                                                                 <td>
                                                                     <div className="btn-group">
                                                                         <button
@@ -328,7 +393,7 @@ export default class DashboardPage extends Component {
                                                                             {" "}<MDBIcon far icon="trash-alt"/>
                                                                             {" "} Delete{" "}
                                                                         </button>
-
+                                                                        
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -353,8 +418,23 @@ export default class DashboardPage extends Component {
                         <MDBCol md="12">
                             <MDBCard>
                                 <MDBCardBody>
-                                    <Link to="/add-site" ><MDBBtn className="float-left" color="primary" size="sm">Add Site</MDBBtn></Link>
-
+                                    <MDBRow md="12">
+                                        <MDBCol md="3">
+                                            <select
+                                                id="siteType"
+                                                className="form-control"
+                                                value={this.state.siteType}
+                                                name="siteType" onChange={this.onChangeSityType}
+                                                required
+                                                >
+                                                    <option value="allSites" selected>All Sites</option>
+                                                    <option value="mySites">My Sites</option>
+                                            </select>
+                                        </MDBCol>
+                                        <MDBCol md="9">
+                                            <Link to="/add-site" ><MDBBtn className="float-right" color="primary" size="sm">Add Site</MDBBtn></Link>
+                                        </MDBCol>
+                                    </MDBRow>
                                     <MDBTable bordered>
                                         <MDBTableHead>
                                             <tr className="bg-dark text-light">
@@ -362,7 +442,10 @@ export default class DashboardPage extends Component {
                                                 <th>Address</th>
                                                 <th>Employees</th>
                                                 <th>Manager</th>
-                                                <th></th>
+                                                {
+                                                    this.state.siteType ==="mySites" &&
+                                                    <th></th>
+                                                }
                                             </tr>
                                         </MDBTableHead>
                                         <MDBTableBody>
@@ -372,18 +455,19 @@ export default class DashboardPage extends Component {
                                                                 <td>{res.siteAddress}</td>
                                                                 <td>{res.employeeCount}</td>
                                                                 <td>{res.siteManagerld}</td>
-
-                                                                <td>
+                                                                {
+                                                                    this.state.siteType ==="mySites" &&
+                                                                    <td>
                                                                     <div className="btn-group">
                                                                         <button
                                                                             type="button"
-                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                           onClick={() => this.deleteSiteById(res.siteId)}
                                                                             className="btn btn-danger btn-sm"
                                                                         >
                                                                             {" "}<MDBIcon far icon="trash-alt"/>
                                                                             {" "} Delete{" "}
                                                                         </button>
-
+                                                                        
                                                                     </div>
                                                                 </td>
                                                             </tr>
