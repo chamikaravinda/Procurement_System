@@ -47,7 +47,7 @@ export  class AddItem extends Component {
 
   onSubmit(e){
     e.preventDefault();
-    let addItem = {
+    const addItem = {
       itemName: this.state.itemName,
       quantity:this.state.quantity,
       unitPrice:this.state.unitPrice

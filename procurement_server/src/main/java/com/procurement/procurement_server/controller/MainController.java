@@ -97,7 +97,6 @@ public class MainController {
 	
     @PostMapping("item/addItem")
     public ResponseEntity addNewItem(@RequestBody Object obj) {
-    	
         System.out.println(obj);
         return serviceHandler.handleServiceRequest("1001", obj,"");
     }

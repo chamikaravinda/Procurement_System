@@ -19,7 +19,7 @@ export default class DashboardPage extends Component {
             withQtyItem:[],
             withoutQtyItem:[],
             withQtyItemDelete:[],
-            withoutQtyItemDelete:[]
+            withoutQtyItemDelete:[],
             sites:[],
             siteType:"allSites"
 

@@ -97,8 +97,8 @@ public class ServiceHandler {
 			return getItemWithQty();
 		case CommonConstants.GET_ITEM_BY_NON_QTY:
 			return getItemWithoutQty();
-    case CommonConstants.DELETE_ITEM_REQUEST:
-      return deleteSpecificItem(uid);    
+		case CommonConstants.DELETE_ITEM_REQUEST:
+			return deleteSpecificItem(uid);    
 		default:
 			return new ResponseEntity("Failed", HttpStatus.OK);
 		}
@@ -166,7 +166,7 @@ public class ServiceHandler {
 
 
     }
-    
+
 
     public ResponseEntity getAvailableItemsList() {
         ArrayList<Items> itemsList = new ArrayList<>();
@@ -190,6 +190,14 @@ public class ServiceHandler {
         items.setItemName("Cement Bricks");
         itemsList.add(items);
 
+        items = new Items();
+        items.set_id(5);
+        items.setItemName("Roofing Sheet");
+        itemsList.add(items);
+
+        return new ResponseEntity<Object>(itemsList, HttpStatus.OK);
+    }
+
 	private ResponseEntity getRequiredUser(Object obj) {
 		return userService.getRequiredUser((User) obj);
 	}
@@ -200,89 +208,6 @@ public class ServiceHandler {
 
 	public ResponseEntity<Object> getAllOrders(){	
 		return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
-	}
-
-	public static boolean isIsInitialized() {
-		return isInitialized;
-	}
-
-	public static void setIsInitialized(boolean isInitialized) {
-		ServiceHandler.isInitialized = isInitialized;
-	}
-
-	public ResponseEntity<Object> handleOrder(Order order) {
-
-		int orderItemQuantity = orderService.calculateQuantity(order.getItems());
-		double orderTotal = orderService.calculateTotal(order.getItems());
-
-		Requistion requisition = new Requistion();
-
-		ApprovedOrder approveOrder = new ApprovedOrder(requisition);
-		PendingOrder pendingOrder = new PendingOrder(requisition);
-
-		if (order.get_idAsObjectId() == null) {
-			System.out.println("id is null");
-			requisition.set_id(new ObjectId());
-		} else {
-			System.out.println("id is not null");
-			requisition = order.getRequistion();
-		}
-
-		/*-----------------------------------------------------------*/
-
-		OrderBroker broker = new OrderBroker();
-
-		if (orderTotal > CommonConstants.ORDER_LIMIT) {
-			broker.takeOrder(pendingOrder);
-			requisition = broker.placeOrder();
-		} else {
-			broker.takeOrder(approveOrder);
-			requisition = broker.placeOrder();
-		}
-
-		Order newOrder = new OrderBuilder(order.get_idAsObjectId()).setItems(order.getItems())
-				.setOrderDate(Generator.getCurrentDate()).setPayment(null).setQuantity(orderItemQuantity)
-				.setRequisition(null).setTotalAmount(orderTotal).setOrderPlacedUser(order.getPlacedUser())
-				.setOrderApprovedUser(null).build();
-
-		return new ResponseEntity<>(orderService.addOrder(newOrder, requisition), HttpStatus.OK);
-
-	}
-
-	public ResponseEntity getAvailableItemsList() {
-		ArrayList<Items> itemsList = new ArrayList<>();
-		Items items = new Items();
-		items.set_id(1);
-		items.setItemName("Bricks");
-		itemsList.add(items);
-
-		items = new Item();
-		items.set_id(2);
-		items.setItemName("Cement");
-		itemsList.add(items);
-
-		items = new Items();
-		items.set_id(3);
-		items.setItemName("Mattel");
-		itemsList.add(items);
-
-		items = new Items();
-		items.set_id(4);
-		items.setItemName("Cement Bricks");
-		itemsList.add(items);
-
-		items = new Items();
-		items.set_id(5);
-		items.setItemName("Roofing Sheet");
-		itemsList.add(items);
-
-		return new ResponseEntity<Object>(itemsList, HttpStatus.OK);
-	}
-
-	public ResponseEntity<Object> getAllOrders() {
-
-		return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
-
 	}
 
 	public ResponseEntity<Object> getOrdersByStatus(String status) {
@@ -331,46 +256,7 @@ public class ServiceHandler {
 	private ResponseEntity getSiteByID(String id) {
 		return siteService.getSiteByID(id);
 	}
-	/*---------Item------------- */
-
-	private ResponseEntity addNewItem(Item obj) {
-		return itemService.addNewItem(obj);
-
-	}
-
-	private ResponseEntity getItemWithoutQty() {
-		return itemService.getItemWithoutQty();
-	}
-
-	private ResponseEntity getItemWithQty() {
-		return itemService.getItemWithQty();
-
-	}
-
-	private ResponseEntity getStaffMembersByType(String type) {
-		return staffService.getStaffMembersByType(type);
-	}
-
-    private ResponseEntity getAllUsers() {
-        return userService.getAllUsers();
-    }
-    
-    /*---------Site---------------*/
-    private ResponseEntity addSite(Site site) {
-    	return siteService.addSite(site);
-    } 
-    
-    private ResponseEntity getAllSites() {
-    	return siteService.getAllSites();
-    }
-    
-    private ResponseEntity deletSiteByID(String id) {
-    	return siteService.deleteSiteByID(id);
-    }
-    
-    private ResponseEntity getSitesByAddedUser(String id) {
-    	return siteService.getAllSitesByAddedUser(id);
-    }
+   
     /*---------Item------------- */
 
     private ResponseEntity addNewItem(Item obj) {
