@@ -6,7 +6,10 @@ import UserLogin from '../userManagment/login.component';
 import UserRegister from '../userManagment/register.component';
 import AddSupplier from '../supplierManagement/AddSuppliers';
 import Main from '../pages/MainPage';
+import AddItem from '../supplierManagement/addItem';
+import UpdateItem from '../supplierManagement/updateItem';
 import AddSite from '../siteManagement/AddSite.component';
+
 
 class Routes extends React.Component {
     render() {
@@ -16,7 +19,10 @@ class Routes extends React.Component {
                 <Route path='/dashboard' component={DashboardPage}/>
                 <Route path='/supplier' component={AddSupplier}/>
                 <Route path='/404' component={NotFoundPage}/>
+                <Route path='/addItem' component={AddItem}/>
+                <Route path='/updateItem' component={UpdateItem}/>
                 <Route path='/add-site' component={AddSite}/>
+
             </Switch>
         );
     }

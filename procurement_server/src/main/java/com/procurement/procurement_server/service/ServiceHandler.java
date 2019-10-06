@@ -90,7 +90,9 @@ public class ServiceHandler {
             case CommonConstants.GET_ITEM_BY_QTY:
                return getItemWithQty();
             case CommonConstants.GET_ITEM_BY_NON_QTY:
-               return getItemWithoutQty();
+               return getItemWithoutQty(); 
+            case CommonConstants.DELETE_ITEM_REQUEST:
+              return deleteSpecificItem(uid);
             default:
                 return new ResponseEntity("Failed", HttpStatus.OK);
         }
@@ -198,10 +200,8 @@ public class ServiceHandler {
         return new ResponseEntity<Object>(itemsList, HttpStatus.OK);
     }
 
-	public ResponseEntity<Object> getAllOrders(){
-		
+	public ResponseEntity<Object> getAllOrders(){	
 		return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
-		
 	}
 
 	public ResponseEntity<Object> getOrdersByStatus( String status ) {
@@ -248,7 +248,7 @@ public class ServiceHandler {
     	return siteService.getAllSitesByAddedUser(id);
     }
     /*---------Item------------- */
-	
+
     private ResponseEntity addNewItem(Item obj) {
       return itemService.addNewItem(obj);
 
@@ -261,7 +261,9 @@ public class ServiceHandler {
       return itemService.getItemWithQty();
 
     }
-    
+    private ResponseEntity deleteSpecificItem(String uid) {
+		return itemService.deleteSpecifiItem(uid);
+	  }
     private ResponseEntity getStaffMembersByType(String type) {
     	return staffService.getStaffMembersByType(type);
     }
