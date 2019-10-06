@@ -17,8 +17,19 @@ export default class DashboardPage extends Component {
             email: '',
             withQtyItem:[],
             withoutQtyItem:[],
-            sites:[]
+            sites:[],
+            siteType:"allSites"
         }
+
+        this.onChangeSityType=this.onChangeSityType.bind(this);
+    }
+
+    
+    onChangeSityType(e){
+        this.setState({
+            siteType:e.target.value
+        })
+        this.getSiteDetails(localStorage.getItem("id"),e.target.value);
     }
 
     fileDelete(_id) {
@@ -29,6 +40,16 @@ export default class DashboardPage extends Component {
                 this.setState({
                     allUsers: res.data.body,
                 })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    deleteSiteById(_id) {
+        axios.get('http://localhost:5001/api/construction/data?RT=73&Uid=' + _id)
+            .then(res => {
+                this.getSiteDetails(localStorage.getItem("id"))
             })
             .catch(err => {
                 console.log(err);
@@ -86,23 +107,40 @@ export default class DashboardPage extends Component {
             })
 
         if (localStorage.getItem('userType') === "Supervisor") {
+            this.getSiteDetails(localStorage.getItem("id"),this.state.siteType);
+        }
+    }
+
+    getSiteDetails(id,type){
+        if(type === "allSites"){
+            console.log("All sites loaded");
             axios.get('http://localhost:5001/api/construction/data?RT=72')
             .then(res => {
                 this.setState({
                     sites: res.data,
-
                 })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }else{
+            console.log("My sites loaded");
+            axios.get('http://localhost:5001/api/construction/data?RT=74&Uid=' + id)
+            .then(res => {
+                if(res.data.length>0){
+                    this.setState({
+                        sites: res.data
+                        
+                    })
+                }else{
+                    console.log("no sites to show")
+                }
             })
             .catch(err => {
                 console.log(err);
             })
         }
     }
-
-    
-
-    
-
 
     render() {
         var _getSiteProcurementManagerBoard = () =>
@@ -331,8 +369,23 @@ export default class DashboardPage extends Component {
                         <MDBCol md="12">
                             <MDBCard>
                                 <MDBCardBody>
-                                    <Link to="/add-site" ><MDBBtn className="float-left" color="primary" size="sm">Add Site</MDBBtn></Link>
-
+                                    <MDBRow md="12">
+                                        <MDBCol md="3">
+                                            <select
+                                                id="siteType"
+                                                className="form-control"
+                                                value={this.state.siteType}
+                                                name="siteType" onChange={this.onChangeSityType}
+                                                required
+                                                >
+                                                    <option value="allSites" selected>All Sites</option>
+                                                    <option value="mySites">My Sites</option>
+                                            </select>             
+                                        </MDBCol>
+                                        <MDBCol md="9">
+                                            <Link to="/add-site" ><MDBBtn className="float-right" color="primary" size="sm">Add Site</MDBBtn></Link>          
+                                        </MDBCol>           
+                                    </MDBRow>
                                     <MDBTable bordered>
                                         <MDBTableHead>
                                             <tr className="bg-dark text-light">
@@ -340,7 +393,10 @@ export default class DashboardPage extends Component {
                                                 <th>Address</th>
                                                 <th>Employees</th>
                                                 <th>Manager</th>
-                                                <th></th>
+                                                {
+                                                    this.state.siteType ==="mySites" &&
+                                                    <th></th>
+                                                }
                                             </tr>
                                         </MDBTableHead>
                                         <MDBTableBody>
@@ -350,12 +406,13 @@ export default class DashboardPage extends Component {
                                                                 <td>{res.siteAddress}</td>
                                                                 <td>{res.employeeCount}</td>
                                                                 <td>{res.siteManagerld}</td>
-                                                                                                      
-                                                                <td>
+                                                                {
+                                                                    this.state.siteType ==="mySites" &&
+                                                                    <td>
                                                                     <div className="btn-group">
                                                                         <button
                                                                             type="button"
-                                                                           // onClick={() => this.fileDelete(result.staffId)}
+                                                                           onClick={() => this.deleteSiteById(res.siteId)}
                                                                             className="btn btn-danger btn-sm"
                                                                         >
                                                                             {" "}<MDBIcon far icon="trash-alt"/>
@@ -364,6 +421,7 @@ export default class DashboardPage extends Component {
                                                                         
                                                                     </div>
                                                                 </td>
+                                                                }
                                                             </tr>
                                                         )
                                                     )}
