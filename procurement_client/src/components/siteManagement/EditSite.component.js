@@ -9,6 +9,7 @@ export  class AddSite extends Component {
     super(props);
 
     this.state = {
+      siteId:'',
       siteName: '',
       siteAddress:'',
       employeeCount:'',
@@ -43,6 +44,7 @@ export  class AddSite extends Component {
     e.preventDefault();
 
     const newSite = {
+      siteId:this.state.id,
       siteName: this.state.siteName,
       siteAddress:this.state.siteAddress,
       employeeCount: this.state.employeeCount,
@@ -53,7 +55,7 @@ export  class AddSite extends Component {
 
         console.log(this.state.siteManager);
 
-        axios.post('http://localhost:5001/api/construction/site/add',newSite)
+        axios.post('http://localhost:5001/api/construction/site/update',newSite)
         .then((response) => {
           console.log(response);
         }, (error) => {

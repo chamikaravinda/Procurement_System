@@ -54,6 +54,8 @@ export default class DashboardPage extends Component {
         axios.get('http://localhost:5001/api/construction/data?RT=73&Uid=' + _id)
             .then(res => {
                 this.getSiteDetails(localStorage.getItem("id"))
+                swal("Success", "Site deleted sucessfully", "success");
+                this.props.history.push("/dashboard");
             })
             .catch(err => {
                 console.log(err);
@@ -64,9 +66,8 @@ export default class DashboardPage extends Component {
         console.log("Auto Called" + _id);
         axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
             .then(res => {
-                this.setState({
-                    withQtyItem: res.data,
-                })
+                swal("Success", "Item deleted sucessfully", "success");
+                this.props.history.push("/dashboard");
             })
             .catch(err => {
                 console.log(err);
@@ -77,9 +78,8 @@ export default class DashboardPage extends Component {
         axios.get('http://localhost:5001/api/construction/data?RT=1006&Uid=' + _id)
             .then(res => {
                 console.log("Response From Delete Request" + res.data.body);
-                this.setState({
-                    withoutQtyItemDelete:res.data.body,
-                })
+                swal("Success", "Itme deleted sucessfully", "success");
+                this.props.history.push("/dashboard");
             })
             .catch(err => {
                 console.log(err);
