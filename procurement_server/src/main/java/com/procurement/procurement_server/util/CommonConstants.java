@@ -33,6 +33,7 @@ public class CommonConstants {
     public static final int GET_ITEM_BY_QTY = 1003;
     public static final int GET_ITEM_BY_NON_QTY = 1004;
     public static final int UPDATE_ITEM_REQUEST = 1005;
+    public static final int DELETE_ITEM_REQUEST = 1006;
     /*----------------------------------------------------------------------*/
 
     /*-------------------Mapping-----------------------*/

@@ -65,12 +65,13 @@ public class ServiceHandler {
 			return getItemWithQty();
 		case CommonConstants.GET_ITEM_BY_NON_QTY:
 			return getItemWithoutQty();
+		case CommonConstants.DELETE_ITEM_REQUEST:
+			return deleteSpecificItem(uid);
 		default:
 			return new ResponseEntity("Failed", HttpStatus.OK);
 		}
 	}
 
-	
 
 	private ResponseEntity getRequiredUser(Object obj) {
 		return userService.getRequiredUser((User) obj);
@@ -152,6 +153,9 @@ public class ServiceHandler {
 	private  ResponseEntity getItemWithQty() {
 		return itemService.getItemWithQty();
 
+	}
+	private ResponseEntity deleteSpecificItem(String uid) {
+		return itemService.deleteSpecifiItem(uid);
 	}
 
 }

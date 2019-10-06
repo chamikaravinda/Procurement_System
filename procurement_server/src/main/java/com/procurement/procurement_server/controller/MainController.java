@@ -47,6 +47,7 @@ public class MainController {
     @GetMapping("/data")
     public ResponseEntity getData(@RequestParam(value = "RT") String reqTyp,@RequestParam(value = "Uid", defaultValue = "") String uid) {
         System.out.println("Request type :"+reqTyp);
+        System.out.println("user id :"+ uid);
         return serviceHandler.handleServiceRequest(reqTyp, new Object(), uid);
     }
     
