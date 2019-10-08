@@ -469,6 +469,7 @@ componentDidMount() {
                                     <MDBTable bordered>
                                         <MDBTableHead>
                                             <tr className="bg-dark text-light">
+                                                <th></th>
                                                 <th>Site Name</th>
                                                 <th>Address</th>
                                                 <th>Employees</th>
@@ -482,6 +483,7 @@ componentDidMount() {
                                         <MDBTableBody>
                                                     {this.state.sites.map((res,index) => (
                                                             <tr>
+                                                                <td>{index+1}</td>
                                                                 <td>{res.siteName}</td>
                                                                 <td>{res.siteAddress}</td>
                                                                 <td>{res.employeeCount}</td>

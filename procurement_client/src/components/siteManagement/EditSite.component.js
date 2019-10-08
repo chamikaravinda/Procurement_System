@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn,MDBCard, MDBCardBody } from 'mdbreact';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import swal from "sweetalert";
 
 
 export  class AddSite extends Component {
@@ -44,7 +45,7 @@ export  class AddSite extends Component {
     e.preventDefault();
 
     const newSite = {
-      siteId:this.state.id,
+      siteId:this.props.match.params.id,
       siteName: this.state.siteName,
       siteAddress:this.state.siteAddress,
       employeeCount: this.state.employeeCount,
@@ -58,6 +59,8 @@ export  class AddSite extends Component {
         axios.post('http://localhost:5001/api/construction/site/update',newSite)
         .then((response) => {
           console.log(response);
+          swal("Success", "Site Updated sucessfully", "success");
+          this.props.history.push("/dashboard");
         }, (error) => {
           console.log(error);
         });

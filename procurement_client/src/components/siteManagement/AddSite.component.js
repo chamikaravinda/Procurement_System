@@ -82,7 +82,7 @@ render(){
   return (
     <MDBContainer className="text-center">
       <MDBRow>
-        <MDBCol md="6">
+        <MDBCol  className="offset-md-3" md="6">
         <MDBCard>
             <MDBCardBody>
           <form onSubmit={this.onSubmit}>
